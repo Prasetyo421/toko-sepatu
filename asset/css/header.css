@@ -1,0 +1,262 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: 1px solid black;
+}
+
+.container {
+	/* width: 1000px; */
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.container .top-nav {
+	width: 100%;
+}
+
+.container .top-nav .container {
+	height: 50px;
+	width: 90%;
+	margin-left: 5%;
+	border-bottom: 1px solid black;
+}
+
+.container .top-nav .container h1 {
+	float: left;
+	line-height: 50px;
+}
+
+.container .top-nav .container span {
+	line-height: 50px;
+	float: right;
+	width: 450px;
+}
+
+.container .top-nav .container span a {
+	text-decoration: none;
+	margin-right: 3%;
+	color: rgb(138, 134, 134);
+}
+
+.container .top-nav .container .burger {
+	margin-top: 1.5%;
+	display: none;
+	width: 39px;
+	height: 30px;
+	background-image: url("image/burger.svg");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.container .top-nav-mobile {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-image: linear-gradient(#c53825, rgb(231, 215, 122));
+	z-index: 12;
+}
+
+.container .top-nav-mobile img {
+	position: absolute;
+	top: 2%;
+	right: 3%;
+}
+
+.container .top-nav-mobile .nav {
+	width: 100%;
+	position: absolute;
+	top: 20%;
+	left: 0;
+}
+
+.nav-icon {
+	width: 39px;
+	height: 30px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	float: left;
+}
+
+.container .top-nav-mobile .nav .profile .icon {
+	background-image: url("image/icon-people.svg");
+	margin-bottom: 3rem;
+}
+
+.container .top-nav-mobile .nav .peraturan .icon {
+	background-image: url("image/speaker.svg");
+	margin-bottom: 3rem;
+}
+
+.container .top-nav-mobile .nav .pengingat .icon {
+	background-image: url("image/speaker.svg");
+	margin-bottom: 3rem;
+}
+
+.container .top-nav-mobile .nav .ibu-kos .icon {
+	background-image: url("image/speaker.svg");
+	margin-bottom: 3rem;
+}
+
+.container .top-nav-mobile .nav .pembayaran .icon {
+	background-image: url("image/speaker.svg");
+	margin-bottom: 3rem;
+}
+
+.container .top-nav-mobile .nav a {
+	display: inline;
+	text-decoration: none;
+	font-size: 1.5rem;
+	margin-left: 1rem;
+	/* margin-bottom: 2rem; */
+	color: #ffffff;
+}
+
+.container .top-nav-mobile .logout {
+	width: 100%;
+	height: 40px;
+	position: absolute;
+	bottom: 5%;
+	left: 0;
+}
+
+.container .top-nav-mobile .logout p {
+	float: left;
+	line-height: 40px;
+	font-size: 2rem;
+	margin-left: 1rem;
+}
+
+.container .top-nav-mobile .logout .arrow {
+	height: 32px;
+	width: 110px;
+	background-image: url(image/right\ arrow.svg);
+	display: inline-block;
+	margin-left: 10%;
+}
+
+.container .top-nav-mobile .logout .container .content {
+	/* width: 200px; */
+	height: 200px;
+	background-color: red;
+}
+
+/* AKHIR NAVIGASI */
+
+/* AWAL ISI  */
+
+.container .isi {
+	position: relative;
+	margin-top: 3rem;
+}
+
+.container .isi .container {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.container .isi .container .welcome {
+	height: 30%;
+	border-radius: 1rem;
+}
+
+.container .isi .container .welcome h2 {
+	text-align: center;
+}
+
+.container .isi .container .row {
+	width: 100%;
+}
+
+.container .isi .container .row .col {
+	display: inline-block;
+	width: 30%;
+	height: 10rem;
+	margin-left: auto;
+	margin-right: 2rem;
+	margin-top: 2rem;
+	overflow: hidden;
+	/* border: 1px solid black; */
+}
+
+.container .isi .container .row .col p {
+	text-align: center;
+	/*     line-height: 1rem; */
+	margin-bottom: 4.3rem;
+}
+
+.container .isi .container .row .col:hover p {
+	transform: translateY(-162%);
+	transition: 1s;
+	/*   background-color: red; */
+}
+
+/* AKHIR ISI */
+
+/* AWAL FOOTER */
+.container .footer {
+	width: 100%;
+	height: 20%;
+	background-color: #000000;
+	margin-bottom: 1rem;
+}
+
+.container .footer p {
+	color: #ffffff;
+	text-align: center;
+}
+
+/* AKHIR FOOTER */
+
+/* AWAL KUBUS */
+.kubus-wrapper {
+	width: 250px;
+	height: 250px;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	box-shadow: 10px 10px 54px -6px rgba(0, 0, 0, 0.75);
+	transform: translate(-50%, -50%);
+}
+.kubus,
+.kubus div {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: absolute;
+	transform-style: preserve-3d;
+	transition: transform 0.5s ease-in-out;
+}
+.kubus-depan {
+	background: url("CODESHOW1.png") #ffffff no-repeat center;
+	background-size: 100%;
+}
+.kubus-atas {
+	background: url("CODESHOW2.png") #cc0000 no-repeat center;
+	background-size: 100%;
+	transform: translate(0, -100%) rotateX(90deg);
+	transform-origin: bottom;
+}
+.kubus-wrapper:hover .kubus {
+	transform: translate(0, 50%) rotateX(-90deg);
+}
+
+@keyframes slideFromLeft {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.container .top-nav .container .active {
+	color: red;
+}
+
+.clear {
+	clear: both;
+}

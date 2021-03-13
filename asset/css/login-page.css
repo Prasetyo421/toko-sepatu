@@ -1,0 +1,102 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	background-color: rgb(16, 40, 92);
+}
+
+.container form {
+	display: flex;
+	width: 500px;
+	flex-direction: column;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 80px;
+	padding: 30px 0px;
+	box-sizing: border-box;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+.container form h1 {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 30px;
+}
+
+.container form .form-grup {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+}
+
+.container form input {
+	height: 25px;
+	padding-left: 10px;
+	border-radius: 1rem;
+	border: 1px solid rgb(170, 170, 170);
+	outline: none;
+}
+
+.container form button {
+	width: 100px;
+	height: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 15px;
+	background-color: aqua;
+	border: 1px solid aqua;
+	border-radius: 1rem;
+	color: #fff;
+	outline: none;
+}
+
+.container form button:hover {
+	background-color: #fff;
+	border: 1px solid black;
+	color: #000;
+}
+
+.container form a {
+	margin-left: auto;
+	margin-right: auto;
+	text-decoration: none;
+	margin-bottom: 10px;
+}
+
+.color-red {
+	color: red;
+}
+
+.alert-success {
+	width: 80%;
+	background-color: rgb(171, 211, 152);
+	color: rgb(81, 182, 55);
+	text-align: center;
+	height: 30px;
+	line-height: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -20px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+}
+
+.alert-danger {
+	width: 80%;
+	background-color: rgba(218, 47, 4, 0.5);
+	color: rgb(218, 40, 28);
+	text-align: center;
+	height: 30px;
+	line-height: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -20px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+}

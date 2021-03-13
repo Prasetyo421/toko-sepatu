@@ -1,0 +1,25 @@
+.container .content {
+	display: flex;
+}
+
+.container .content .image-product {
+	display: flex;
+	flex-direction: column;
+	height: auto;
+	width: 50%;
+}
+
+.container .content .image-product .main-image img {
+	width: 380px;
+	border: 1px solid black;
+}
+
+.container .content .image-product .thumb-image {
+	width: 382px;
+	height: 40px;
+	background-color: aquamarine;
+}
+
+.container .content .info-product {
+	width: 50%;
+}

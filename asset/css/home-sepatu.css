@@ -1,0 +1,196 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Courier New", Courier, monospace;
+	/* border: 1px solid black; */
+	box-sizing: border-box;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+.container {
+	width: 100%;
+	height: auto;
+}
+
+.content .hero-image {
+	margin-bottom: 3rem;
+}
+
+.container .content .hero-image .hero {
+	width: 100%;
+	height: auto;
+}
+
+.content .hero-image img {
+	height: 50rem;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.content .sepatu {
+	height: auto;
+	margin-bottom: 3rem;
+	margin-top: 3rem;
+}
+
+.content .sepatu .type-sepatu {
+	height: auto;
+	clear: both;
+	overflow: auto;
+}
+
+.content .sepatu .type-sepatu .type {
+	font-size: 1.5rem;
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
+.content .sepatu .type-sepatu .list-sepatu {
+	width: 100%;
+	margin-left: 6rem;
+	overflow-x: hidden;
+	position: relative;
+}
+
+.content .sepatu .type-sepatu .list-sepatu .item {
+	height: 230px;
+	width: 250px;
+	float: left;
+	border: 1px solid black;
+	border-radius: 5px;
+	margin-right: 2rem;
+	position: relative;
+}
+
+.content .sepatu .type-sepatu .list-sepatu .item img {
+	height: 190px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.content .sepatu .type-sepatu .list-sepatu .item:hover {
+	cursor: pointer;
+}
+
+.content .sepatu .type-sepatu .list-sepatu .item:hover a {
+	display: block;
+}
+
+.content .sepatu .type-sepatu .list-sepatu .item a {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 250px;
+	height: 190px;
+	background-color: rgb(179, 179, 179);
+	opacity: 0.8;
+	opacity: 0.2;
+	display: none;
+}
+
+.content .sepatu .type-sepatu .list-sepatu .left-arrow {
+	float: left;
+}
+
+.content .sepatu .type-sepatu .list-sepatu .left-right {
+	float: right;
+	color: red;
+	background-color: aqua;
+}
+
+.content .sepatu .type-sepatu .list-sepatu .left-arrow {
+	position: absolute;
+	top: -20%;
+	left: 0;
+	background-color: red;
+}
+
+.spesifikasi {
+	clear: both;
+}
+
+.spesifikasi .item-spec {
+	width: 200px;
+	margin-left: 2rem;
+	margin-bottom: 2rem;
+	float: left;
+}
+
+.spesifikasi .item-spec h3 {
+	text-align: center;
+}
+
+.footer {
+	clear: both;
+	width: 100%;
+	height: 3rem;
+	background-color: #000;
+}
+
+.footer p {
+	text-align: center;
+	color: #fff;
+	line-height: 3rem;
+}
+
+@media screen and (max-width: 1000px) {
+	.container .content .hero-image img {
+		height: auto;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 650px) {
+	.content .sepatu .type-sepatu .list-sepatu {
+		margin-left: 0;
+	}
+
+	.content .sepatu .type-sepatu .list-sepatu .item {
+		display: block;
+	}
+}
+
+@media screen and (max-width: 900px) {
+	.container .nav {
+		display: none;
+	}
+
+	.container .top-nav .bars {
+		display: block;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.container {
+		width: 100%;
+	}
+
+	.spesifikasi .item-spec {
+		width: 100%;
+		margin-left: 1rem;
+		margin-right: 1rem;
+	}
+
+	.content .sepatu .type .list-sepatu .item {
+		width: 90%;
+		height: auto;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.content .sepatu .type .list-sepatu .item img {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.content .sepatu .type .list-sepatu .item p {
+		text-align: center;
+	}
+}

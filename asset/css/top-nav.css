@@ -1,0 +1,152 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+.container .top-nav {
+	display: flex;
+	background-color: transparent;
+	color: #fff;
+	justify-content: space-around;
+	height: 50px;
+	align-items: center;
+	position: fixed;
+	width: 100%;
+	z-index: 100;
+	transition: all 0.5s;
+}
+
+.container .top-nav.sticky {
+	background-color: #000;
+}
+
+.container .top-nav.sticky .login {
+	background-color: #fff;
+	color: #000;
+}
+
+.container .top-nav .brand {
+	color: #fff;
+}
+
+.container .top-nav ul {
+	display: flex;
+	width: 40%;
+	justify-content: space-between;
+	list-style: none;
+}
+
+.container .top-nav ul li a {
+	text-decoration: none;
+	font-size: 0.8em;
+	color: #fff;
+}
+
+.container .top-nav ul li a:hover {
+	color: #000;
+	background-color: #fff;
+}
+
+.container .top-nav .login {
+	text-decoration: none;
+	background-color: rgb(6, 10, 9);
+	color: #fff;
+	width: 60px;
+	text-align: center;
+}
+
+.container .top-nav .menu-toggle {
+	flex-direction: column;
+	height: 28px;
+	justify-content: space-between;
+	position: relative;
+	display: none;
+}
+
+.container .top-nav .menu-toggle span {
+	display: block;
+	width: 28px;
+	height: 3px;
+	background-color: #fff;
+	border-radius: 3px;
+	transition: all 0.5s;
+}
+
+.container .top-nav .menu-toggle input {
+	position: absolute;
+	top: -2px;
+	left: -5px;
+	width: 40px;
+	height: 30px;
+	opacity: 0;
+	cursor: pointer;
+	z-index: 3;
+}
+
+.container .top-nav .menu-toggle span:nth-child(2) {
+	transform-origin: 0 0;
+}
+
+.container .top-nav .menu-toggle span:nth-child(4) {
+	transform-origin: 0 100%;
+}
+
+.container .top-nav .menu-toggle input:checked ~ span:nth-child(2) {
+	transform: rotate(45deg) translate(2px, 4px);
+}
+
+.container .top-nav .menu-toggle input:checked ~ span:nth-child(3) {
+	transform: translateX(200px);
+	opacity: 0;
+}
+
+.container .top-nav .menu-toggle input:checked ~ span:nth-child(4) {
+	transform: rotate(-45deg) translate(0, -1px);
+}
+
+/* tablet */
+@media screen and (max-width: 768px) {
+	.container .top-nav ul {
+		width: 50%;
+	}
+}
+
+/* mobile */
+@media screen and (max-width: 578px) {
+	.container .top-nav ul {
+		position: absolute;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		height: 100vh;
+		flex-direction: column;
+		background-color: #000;
+		align-items: center;
+		justify-content: space-evenly;
+		transform: translateX(100%);
+		transition: all 0.5s;
+	}
+
+	.container .top-nav ul.slide {
+		transform: translate(0);
+	}
+
+	.container .top-nav .menu-toggle {
+		display: flex;
+	}
+
+	.container .content .sepatu .type-sepatu {
+		overflow: hidden;
+		margin-bottom: 3rem;
+	}
+
+	.container .content .sepatu .type-sepatu .list-sepatu {
+		width: 1000px;
+		overflow-x: hidden;
+	}
+
+	.container .content .sepatu .type-sepatu .list-sepatu .item {
+		margin-left: 8%;
+		margin-right: 10%;
+	}
+}
