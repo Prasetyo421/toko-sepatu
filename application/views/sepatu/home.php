@@ -18,7 +18,6 @@
                     <div class="left-arrow">=</div>
 
                     <?php foreach ($dataSepatu[$type[$i]] as $item) : ?>
-                        <!-- <?php var_dump($item) ?> -->
                         <div class="item">
                             <img src="<?= base_url(); ?>asset/image/sepatu/crop/<?= $item['gambar']->image[0]; ?>" alt="">
                             <p><?= $item['nama'] ?></p>

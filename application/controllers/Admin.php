@@ -44,80 +44,93 @@ class Admin extends CI_Controller
             $this->load->view('admin/add_sepatu', $data);
             $this->load->view('templates/footer_admin');
         } else {
-            $namaSepatu = $this->input->post('name-sepatu');
+            $namaSepatu = time();
 
-            // jika ada gambar yang di upload
-            if ($_FILES['image']['name']) {
-                $tmpName = $_FILES['image']['tmp_name'];
+            $jumlahData = count($_FILES['image']['name']);
+
+            $gambar = [];
+            for ($i = 0; $i < $jumlahData; $i++) {
+                $tmpName = $_FILES['image']['tmp_name'][$i];
                 $data = list($width, $height, $type, $attr) = getimagesize($tmpName);
-
                 $ekstensi = explode('/', $data['mime']);
                 $ekstensi = $ekstensi[1];
-                $config['file_name']         = $namaSepatu . '.' . $ekstensi;
-                $config['upload_path']       = './asset/image/sepatu';
-                $config['allowed_types']     = 'jpg|jpeg|png|gif';
 
+                // Inisialisasi
+                $_FILES['file']['name']     = $_FILES['image']['name'][$i];
+                $_FILES['file']['type']     = $_FILES['image']['type'][$i];
+                $_FILES['file']['tmp_name'] = $_FILES['image']['tmp_name'][$i];
+                $_FILES['file']['size']     = $_FILES['image']['size'][$i];
+
+                // config
+
+                $config['file_name'] = $namaSepatu . '.' . $ekstensi;
+                $config['upload_path'] = './asset/image/sepatu';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+
+                // memanggil library 
                 $this->load->library('upload', $config);
+                $this->upload->initialize($config);
 
-                // jika berhasil mengupload gambar
-                if (!$this->upload->do_upload('image')) {
-                    echo $this->upload->display_errors();
+                if ($this->upload->do_upload('file') == false) {
+                    var_dump($this->upload->display_errors());
                     die;
                 } else {
-                    $data = $this->upload->data();
+                    $dataUpload = $this->upload->data();
 
                     $this->load->library('image_lib');
 
-                    $fileName = '';
-                    // CROP
-                    if ($height / 80 == 16 && $width / 80 == 9) {
-                        // lakukan crop
-                        $fileName = $this->crop('./asset/image/sepatu/' . $data['file_name']);
-                    }
-                    var_dump($fileName);
-                    echo '<br>';
-                    $fileNameThumb = $this->thumb('./asset/image/sepatu/crop/' . $fileName);
-                    $this->image_lib->clear();
+                    $sourceImage = './asset/image/sepatu/' . $dataUpload['file_name'];
+                    $fileName    = $dataUpload['raw_name'] . '_crop' . $dataUpload['file_ext'];
+                    $gambar['image'][$i] = $this->crop($sourceImage, $fileName);
 
-                    $ukuran = $this->input->post('size');
-                    $ukuranJSON = json_encode($ukuran);
-                    $gambar['image'] = [$fileName];
-                    $gambar['thumb'] = [$fileNameThumb];
-                    $data = [
-                        'image' => $gambar['image'],
-                        'thumb' => $gambar['thumb']
-                    ];
-                    $gambarJSON = json_encode($data);
-
-                    $data = [
-                        'nama' => htmlspecialchars($this->input->post('name-sepatu', true)),
-                        'ukuran' => $ukuranJSON,
-                        'harga' => htmlspecialchars($this->input->post('price', true)),
-                        'deskripsi' => htmlspecialchars($this->input->post('deskripsi', true)),
-                        'spesifikasi' => htmlspecialchars($this->input->post('spesifikasi', true)),
-                        'gambar' => $gambarJSON
-                    ];
-
-                    if ($this->db->insert('sepatu', $data)) {
-                        $this->session->set_flashdata('message', '<div class="alert-success">image uploaded successfully</div>
-                    ');
-                        redirect('admin/tambah_sepatu');
-                    } else {
-                        $this->db->display_error();
-                    }
+                    $sourceImage = './asset/image/sepatu/crop/' . $gambar['image'][$i];
+                    $fileName    = $dataUpload['raw_name'] . '_thumb' . $dataUpload['file_ext'];
+                    $gambar['thumb'][$i] = $this->thumb($sourceImage, $fileName);
                 }
+            }
+
+            $ukuran = $this->input->post('size');
+            $ukuranJSON = json_encode($ukuran);
+            $gambarJSON = json_encode($gambar);
+            // var_dump($gambar);
+            // echo '<br>';
+            // echo 'gambar json';
+            // echo '<br>';
+            // var_dump($gambarJSON);
+            // echo '<br>';
+            // echo 'semua data';
+            // echo '<br>';
+
+            $data = [
+                'nama' => htmlspecialchars($this->input->post('name-sepatu'), true),
+                'ukuran' => $ukuranJSON,
+                'harga' => htmlspecialchars($this->input->post('price'), true),
+                'deskripsi' => htmlspecialchars($this->input->post('deskripsi'), true),
+                'spesifikasi' => htmlspecialchars($this->input->post('spesifikasi'), true),
+                'gambar' => $gambarJSON
+            ];
+
+            $query = $this->db->insert('sepatu', $data);
+            if ($query == false) {
+                var_dump($this->db->display_error());
+                echo ('<br>');
             } else {
-                $this->session->set_flashdata('message', '<div class="alert-danger">No image</div>
-                ');
-                redirect('admin/tambah_sepatu');
+                $data['css'] = 'tambah-sepatu.css';
+                $data['ukuran'] = $this->db->get('ukuran')->result_array();
+                $this->session->set_flashdata('message', '<div class="alert-success">Data berhasil di tambahkan</div>');
+                $this->load->view('templates/header_admin', $data);
+                $this->load->view('templates/sidebar');
+                $this->load->view('templates/top_bar_admin');
+                $this->load->view('admin/add_sepatu', $data);
+                $this->load->view('templates/footer_admin');
+                // $allData = $this->db->get('sepatu')->result_array();
+                // var_dump($allData);
             }
         }
     }
 
-    private function crop($sourceImage)
+    private function crop($sourceImage, $fileName)
     {
-        $fileName = explode('/', $sourceImage);
-        $fileName = end($fileName);
 
         $config['image_library'] = 'gd2';
         $config['source_image'] = $sourceImage;
@@ -140,14 +153,8 @@ class Admin extends CI_Controller
         }
     }
 
-    private function thumb($sourceImage)
+    private function thumb($sourceImage, $fileName)
     {
-        $fileName = explode('/', $sourceImage);
-        $fileName = end($fileName);
-        var_dump($sourceImage);
-        echo '<br>';
-        var_dump($fileName);
-        // die;
 
         $config['image_library'] = 'gd2';
         $config['source_image'] = $sourceImage;

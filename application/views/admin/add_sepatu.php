@@ -5,7 +5,7 @@
     <?php endif; ?>
     <div class="form-grup">
         <label for="name-sepatu">Nama Produk</label>
-        <input type="text" name="name-sepatu" id="name-sepatu">
+        <input type="text" name="name-sepatu" id="name-sepatu" value="<?= set_value('name-sepatu'); ?>">
         <?= form_error('name-sepatu', '<small class="color-red">', '</small>'); ?>
     </div>
     <div class="form-grup">
@@ -19,22 +19,22 @@
     </div>
     <div class="form-grup">
         <label for="deskripsi">Deskripsi Produk</label>
-        <input type="text" name="deskripsi" id="deskripsi">
+        <input type="text" name="deskripsi" id="deskripsi" value="<?= set_value('deskripsi'); ?>">
         <?= form_error('deskripsi', '<small class="color-red">', '</small>'); ?>
     </div>
     <div class="form-grup">
         <label for="spesifikasi">Spesifikasi</label>
-        <textarea name="spesifikasi" id="spesifikasi" cols="30" rows="10"></textarea>
+        <textarea name="spesifikasi" id="spesifikasi" cols="30" rows="10" value="<?= set_value('spesifikasi') ?>"></textarea>
         <?= form_error('spesifikasi', '<small class="color-red">', '</small>'); ?>
     </div>
     <div class="form-grup">
         <label for="price">Harga</label>
-        <input type="text" name="price" id="price">
+        <input type="text" name="price" id="price" value="<?= set_value('price'); ?>">
         <?= form_error('price', '<small class="color-red">', '</small>'); ?>
     </div>
     <div class="form-grup">
         <label for="image">Gambar</label>
-        <input type="file" name="image" id="image" class="image" multiple>
+        <input type="file" name="image[]" id="image" class="image" multiple value="<?= set_value('image'); ?>">
     </div>
     <button type="submit" name="submit" id="submit">Tambah Data</button>
 </form>
