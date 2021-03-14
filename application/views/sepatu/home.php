@@ -21,7 +21,7 @@
                         <div class="item">
                             <img src="<?= base_url(); ?>asset/image/sepatu/crop/<?= $item['gambar']->image[0]; ?>" alt="">
                             <p><?= $item['nama'] ?></p>
-                            <a href="<?= base_url(); ?>sepatu/detail/<?= $item['id']; ?>"></a>
+                            <a href="<?= base_url(); ?>home/detailSepatu/<?= $item['id']; ?>"></a>
                         </div>
 
                     <?php endforeach; ?>
@@ -48,3 +48,4 @@
             </div>
         </div>
     </div>
+</div>

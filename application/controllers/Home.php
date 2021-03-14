@@ -13,7 +13,7 @@ class Home extends CI_Controller
     public function index()
     {
         $data['judul'] = 'Halaman Home';
-        $data['css'] = 'header.css';
+        $data['css'] = 'home-sepatu.css';
 
         $this->db->select('type');
         $tipe = $this->db->get('type_sepatu')->result_array();
@@ -36,8 +36,23 @@ class Home extends CI_Controller
 
         // var_dump($data['dataSepatu']);
 
-        $this->load->view('templates/sepatu_header');
+        $this->load->view('templates/sepatu_header', $data);
         $this->load->view('sepatu/home', $data);
+        $this->load->view('templates/sepatu_footer');
+    }
+
+    public function detailSepatu($id)
+    {
+        $data['judul'] = 'Halaman Detail Sepatu';
+        $data['css'] = 'detail-sepatu.css';
+        $data['sepatu'] = $this->sepatu->getDataSepatuById($id);
+        $data['sepatu']['ukuran'] = json_decode($data['sepatu']['ukuran']);
+        $data['sepatu']['gambar'] = json_decode($data['sepatu']['gambar']);
+        // var_dump($data['sepatu']);
+        // die;
+
+        $this->load->view('templates/sepatu_header', $data);
+        $this->load->view('sepatu/detail', $data);
         $this->load->view('templates/sepatu_footer');
     }
 }
