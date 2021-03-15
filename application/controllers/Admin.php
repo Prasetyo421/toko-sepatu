@@ -81,25 +81,27 @@ class Admin extends CI_Controller
 
                     $sourceImage = './asset/image/sepatu/' . $dataUpload['file_name'];
                     $fileName    = $dataUpload['raw_name'] . '_crop' . $dataUpload['file_ext'];
+                    // var_dump($fileName);
+                    // echo '<br>';
                     $gambar['image'][$i] = $this->crop($sourceImage, $fileName);
 
                     $sourceImage = './asset/image/sepatu/crop/' . $gambar['image'][$i];
-                    $fileName    = $dataUpload['raw_name'] . '_thumb' . $dataUpload['file_ext'];
+                    $fileName    = $dataUpload['raw_name'] . $dataUpload['file_ext'];
+                    // var_dump($fileName);
+                    // echo '<br>';
                     $gambar['thumb'][$i] = $this->thumb($sourceImage, $fileName);
+
+                    // echo '<br>';
+                    // var_dump($gambar['image']);
+                    // echo '<br>';
+                    // var_dump($gambar['thumb']);
+                    // echo '<br>';
                 }
             }
 
             $ukuran = $this->input->post('size');
             $ukuranJSON = json_encode($ukuran);
             $gambarJSON = json_encode($gambar);
-            // var_dump($gambar);
-            // echo '<br>';
-            // echo 'gambar json';
-            // echo '<br>';
-            // var_dump($gambarJSON);
-            // echo '<br>';
-            // echo 'semua data';
-            // echo '<br>';
 
             $data = [
                 'nama' => htmlspecialchars($this->input->post('name-sepatu'), true),
@@ -109,6 +111,8 @@ class Admin extends CI_Controller
                 'spesifikasi' => htmlspecialchars($this->input->post('spesifikasi'), true),
                 'gambar' => $gambarJSON
             ];
+
+            die;
 
             $query = $this->db->insert('sepatu', $data);
             if ($query == false) {
@@ -131,6 +135,8 @@ class Admin extends CI_Controller
 
     private function crop($sourceImage, $fileName)
     {
+        // var_dump($fileName);
+        // echo '<br>';
 
         $config['image_library'] = 'gd2';
         $config['source_image'] = $sourceImage;
@@ -155,6 +161,8 @@ class Admin extends CI_Controller
 
     private function thumb($sourceImage, $fileName)
     {
+        echo 'parameter filename thumb: ' . $fileName;
+        echo '<br>';
 
         $config['image_library'] = 'gd2';
         $config['source_image'] = $sourceImage;
@@ -170,6 +178,8 @@ class Admin extends CI_Controller
             echo $this->image_lib->display_errors();
         } else {
             $this->image_lib->clear();
+            echo 'filename thumb: ' . $fileName;
+            echo '<br>';
             return $fileName;
         }
     }

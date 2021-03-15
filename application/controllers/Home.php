@@ -48,6 +48,7 @@ class Home extends CI_Controller
         $data['sepatu'] = $this->sepatu->getDataSepatuById($id);
         $data['sepatu']['ukuran'] = json_decode($data['sepatu']['ukuran']);
         $data['sepatu']['gambar'] = json_decode($data['sepatu']['gambar']);
+        // $data['sepatu']['jumlahGambar'] = count($data['sepatu']['gambar']->thumb);
         // var_dump($data['sepatu']);
         // die;
 
