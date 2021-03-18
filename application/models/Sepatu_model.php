@@ -30,4 +30,34 @@ class Sepatu_model extends CI_Model
     {
         return $this->db->get_where('sepatu', ['id' => $id])->row_array();
     }
+
+    // API
+
+    public function getDataSepatu($id = null)
+    {
+        if ($id === null) {
+            return $this->db->get('sepatu')->result_array();
+        } else {
+            return $this->db->get_where('sepatu', ['id' => $id])->result_array();
+        }
+    }
+
+    public function deleteDataSepatu($id)
+    {
+        $this->db->delete('sepatu', ['id' => $id]);
+        return $this->db->affected_rows();
+    }
+
+
+    public function insertSepatu($data)
+    {
+        $this->db->insert('sepatu', $data);
+        return $this->db->affected_rows();
+    }
+
+    public function updateDataSepatu($data, $id)
+    {
+        $this->db->update('sepatu', $data, ['id' => $id]);
+        return $this->db->affected_rows();
+    }
 }

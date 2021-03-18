@@ -135,18 +135,4 @@
 		display: flex;
 	}
 
-	.container .content .sepatu .type-sepatu {
-		overflow: hidden;
-		margin-bottom: 3rem;
-	}
-
-	.container .content .sepatu .type-sepatu .list-sepatu {
-		width: 1000px;
-		overflow-x: hidden;
-	}
-
-	.container .content .sepatu .type-sepatu .list-sepatu .item {
-		margin-left: 8%;
-		margin-right: 10%;
-	}
 }

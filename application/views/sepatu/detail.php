@@ -1,22 +1,26 @@
 <div class="content">
     <div class="image-product">
         <div class="main-image">
-            <img src="<?= base_url(); ?>asset/image/sepatu/crop/<?= $sepatu['gambar']->image[0]; ?>" alt="">
+            <div class="image-content">
+                <?php for ($i = 0; $i < count($sepatu['gambar']->image); $i++) : ?>
+                    <img src="<?= base_url(); ?>asset/image/sepatu/crop/<?= $sepatu['gambar']->image[$i]; ?>" alt="">
+                <?php endfor; ?>
+            </div>
         </div>
         <div class="thumb-image">
-            <?php foreach ($sepatu['gambar']->thumb as $img) : ?>
-                <span><a href="#"></a><img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $img; ?>" alt=""></span>
-            <?php endforeach; ?>
+            <?php for ($i = 0; $i < count($sepatu['gambar']->thumb); $i++) : ?>
+                <span></a><img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $sepatu['gambar']->thumb[$i]; ?>" alt="" data-image="<?= $i ?>" data-id="<?= $sepatu['id']; ?>" class="thumb"></span>
+            <?php endfor; ?>
         </div>
     </div>
 
     <div class="info-product">
-        <h2><?= $sepatu['nama'] ?></h2>
-        <p>Rp <?= $sepatu['harga'] ?></p>
+        <h1><?= $sepatu['nama'] ?></h1>
+        <p class="harga">Rp <?= $sepatu['harga'] ?></p>
 
-        <h5>Deskripsi</h5>
-        <p><?= $sepatu['deskripsi']; ?></p>
-        <h5>Spesifikasi</h5>
-        <p><?= $sepatu['spesifikasi']; ?></p>
+        <h2>Deskripsi</h2>
+        <p class="deskripsi"><?= $sepatu['deskripsi']; ?></p>
+        <h2>Spesifikasi</h2>
+        <p class="spesifikasi"><?= $sepatu['spesifikasi']; ?></p>
     </div>
 </div>

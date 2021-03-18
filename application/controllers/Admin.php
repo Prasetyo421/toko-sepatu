@@ -81,21 +81,11 @@ class Admin extends CI_Controller
 
                     $sourceImage = './asset/image/sepatu/' . $dataUpload['file_name'];
                     $fileName    = $dataUpload['raw_name'] . '_crop' . $dataUpload['file_ext'];
-                    // var_dump($fileName);
-                    // echo '<br>';
                     $gambar['image'][$i] = $this->crop($sourceImage, $fileName);
 
                     $sourceImage = './asset/image/sepatu/crop/' . $gambar['image'][$i];
                     $fileName    = $dataUpload['raw_name'] . $dataUpload['file_ext'];
-                    // var_dump($fileName);
-                    // echo '<br>';
                     $gambar['thumb'][$i] = $this->thumb($sourceImage, $fileName);
-
-                    // echo '<br>';
-                    // var_dump($gambar['image']);
-                    // echo '<br>';
-                    // var_dump($gambar['thumb']);
-                    // echo '<br>';
                 }
             }
 
@@ -112,7 +102,7 @@ class Admin extends CI_Controller
                 'gambar' => $gambarJSON
             ];
 
-            die;
+            // die;
 
             $query = $this->db->insert('sepatu', $data);
             if ($query == false) {

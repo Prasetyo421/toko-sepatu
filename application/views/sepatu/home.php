@@ -11,23 +11,27 @@
         <?php for ($i = 0; $i < count($type); $i++) : ?>
             <div class="type-sepatu">
 
+                <div class="pref"><i class="fas fa-arrow-left"></i></div>
+
                 <h3 class="type"><?= $type[$i] ?></h3>
 
-                <div class="list-sepatu">
+                <div class="show">
 
-                    <div class="left-arrow">=</div>
+                    <div class="list-sepatu">
 
-                    <?php foreach ($dataSepatu[$type[$i]] as $item) : ?>
-                        <div class="item">
-                            <img src="<?= base_url(); ?>asset/image/sepatu/crop/<?= $item['gambar']->image[0]; ?>" alt="">
-                            <p><?= $item['nama'] ?></p>
-                            <a href="<?= base_url(); ?>home/detailSepatu/<?= $item['id']; ?>"></a>
-                        </div>
+                        <?php foreach ($dataSepatu[$type[$i]] as $item) : ?>
+                            <div class="item">
+                                <img src="<?= base_url(); ?>asset/image/sepatu/crop/<?= $item['gambar']->image[0]; ?>" alt="">
+                                <p><?= $item['nama'] ?></p>
+                                <a href="<?= base_url(); ?>home/detailSepatu/<?= $item['id']; ?>"></a>
+                            </div>
 
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
 
-                    <div class="right-arrow">>></div>
+                    </div>
                 </div>
+
+                <div class="next"><i class="fas fa-arrow-right"></i></div>
 
             </div>
         <?php endfor; ?>

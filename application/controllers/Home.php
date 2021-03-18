@@ -45,15 +45,31 @@ class Home extends CI_Controller
     {
         $data['judul'] = 'Halaman Detail Sepatu';
         $data['css'] = 'detail-sepatu.css';
+        $data['js'] = 'detail sepatu.js';
+
         $data['sepatu'] = $this->sepatu->getDataSepatuById($id);
         $data['sepatu']['ukuran'] = json_decode($data['sepatu']['ukuran']);
         $data['sepatu']['gambar'] = json_decode($data['sepatu']['gambar']);
-        // $data['sepatu']['jumlahGambar'] = count($data['sepatu']['gambar']->thumb);
+        $data['sepatu']['harga'] = $this->formatHarga($data['sepatu']['harga']);
+
         // var_dump($data['sepatu']);
         // die;
 
         $this->load->view('templates/sepatu_header', $data);
         $this->load->view('sepatu/detail', $data);
         $this->load->view('templates/sepatu_footer');
+    }
+
+    private function formatHarga($str = '')
+    {
+        $insert = '.';
+        $i = 1;
+        while (($pos = strlen($str) - (3 * $i + ($i - 1))) > 0) {
+            $str = substr($str, 0, $pos) . $insert . substr($str, $pos);
+
+            $i++;
+        }
+
+        return $str;
     }
 }
