@@ -14,7 +14,7 @@
 <body>
 
     <div class="container">
-        <form action="<?= base_url(); ?>auth" method="post">
+        <form class="form-login" action="<?= base_url(); ?>auth" method="post">
             <h1>Login Page</h1>
             <?= $this->session->flashdata('message');
             unset($_SESSION['message']); ?>
@@ -28,11 +28,24 @@
             </div>
             <button type="submit" name="submit">Login</button>
             <a href="<?= base_url(); ?>auth/registration">create an account</a>
-            <a href="#">forget password?</a>
+            <a id="forget" href="#form-forget-password">forget password?</a>
         </form>
+        <div id="form-forget-password">
+            <span class="close">
+                <p>X</p>
+            </span>
+            <form action="<?= base_url() ?>auth/forgetPassowrd" method="POST">
+                <div class="form-grup">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email">
+                </div>
+                <button type="submit" name="forget">send</button>
+            </form>
+        </div>
     </div>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="<?= base_url(); ?>asset/js/login.js"></script>
 </body>
 
 </html>

@@ -15,6 +15,8 @@
     <div class="container">
         <form action="<?= base_url(); ?>auth/registration" method="post">
             <h1>Create an Account</h1>
+            <?= $this->session->flashdata('message');
+            unset($_SESSION['message']); ?>
             <div class="form-grup">
                 <input type="text" name="name" id="name" placeholder="nama pengguna" value="<?= set_value('name'); ?>">
                 <?= form_error('name', '<small class="color-red">', '</small>'); ?>
@@ -34,7 +36,6 @@
             </div>
             <button type="submit" name="submit">Registrasi</button>
             <a href="<?= base_url(); ?>auth">Already have an account</a>
-            <a href="#">forget password?</a>
         </form>
     </div>
 

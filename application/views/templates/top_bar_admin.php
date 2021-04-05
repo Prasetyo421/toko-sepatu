@@ -1,10 +1,10 @@
 <div class="main">
     <div class="top-nav">
         <div class="menu-toggle" id="menu-toggle">
-            <input type="checkbox" id="checkbox-menu-toggle" onclick="checkboxClick()">
-            <span></span>
-            <span></span>
-            <span></span>
+            <input type="checkbox" id="checkbox-menu-toggle">
+            <span class="toggle"></span>
+            <span class="toggle"></span>
+            <span class="toggle"></span>
         </div>
 
         <div class="user-info">
@@ -14,5 +14,4 @@
             </div>
         </div>
     </div>
-
-    <div class="content">
+    <hr>

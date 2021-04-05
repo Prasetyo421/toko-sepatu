@@ -7,9 +7,13 @@ body {
 	background-color: rgb(16, 40, 92);
 }
 
-.container form {
+.container {
+	position: relative;
+}
+
+.container .form-login {
 	display: flex;
-	width: 500px;
+	width: 60%;
 	flex-direction: column;
 	margin-left: auto;
 	margin-right: auto;
@@ -36,9 +40,9 @@ body {
 }
 
 .container form input {
-	height: 25px;
+	height: 2.5rem;
 	padding-left: 10px;
-	border-radius: 1rem;
+	border-radius: 1.2rem;
 	border: 1px solid rgb(170, 170, 170);
 	outline: none;
 }
@@ -67,6 +71,45 @@ body {
 	margin-right: auto;
 	text-decoration: none;
 	margin-bottom: 10px;
+}
+
+#form-forget-password {
+	position: fixed;
+	width: 400px;
+	height: 200px;
+	background-color: #fff;
+	top: 0;
+	left: 35vw;
+	margin: 0 auto;
+	border: 1px solid black;
+	display: none;
+	opacity: 1;
+}
+
+#form-forget-password .form-grup {
+	margin: 20px auto 0 auto;
+}
+
+#form-forget-password button {
+	margin: 40px auto 0 35%;
+}
+
+#form-forget-password span {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	right: 0;
+	background-color: red;
+}
+
+#form-forget-password span:hover {
+	cursor: pointer;
+}
+
+#form-forget-password span p {
+	text-align: center;
+	line-height: 20px;
 }
 
 .color-red {
@@ -99,4 +142,27 @@ body {
 	margin-top: -20px;
 	margin-bottom: 20px;
 	border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+	.container .form-login {
+		width: 80%;
+	}
+}
+
+@media screen and (max-width: 576px) {
+	.container .form-login {
+		width: 90%;
+	}
+
+	.container form {
+		width: 90vw;
+	}
+
+	#form-forget-password {
+		left: 0;
+		width: 96%;
+		margin-left: 2%;
+		margin-top: 30%;
+	}
 }

@@ -1,28 +1,14 @@
-body {
-	overflow-x: hidden;
-}
-
-.container .top-nav {
-	position: relative;
-	background-color: black;
-	z-index: 3;
-}
-
 .content {
 	display: flex;
-	flex-direction: column;
-}
-
-.content .row1 {
-	display: flex;
 	height: calc(100vh - 50px);
+	margin-top: 30px;
+	justify-content: space-evenly;
 }
 
 .content .image-product {
 	display: flex;
-	/* flex-direction: column; */
-	height: auto;
 	width: 50%;
+	height: 50%;
 }
 
 .content .image-product .main-image {
@@ -35,7 +21,7 @@ body {
 .content .image-product .main-image .image-content {
 	height: 100%;
 	display: flex;
-	width: 2000px;
+	width: auto;
 	position: absolute;
 	left: 0;
 }
@@ -84,7 +70,7 @@ body {
 }
 
 .content .info-product {
-	width: 50%;
+	width: 40%;
 	padding: 20px;
 	display: flex;
 	flex-direction: column;
@@ -106,69 +92,4 @@ body {
 
 .content .info-product p:nth-child(6) {
 	font-size: 1.2em;
-}
-
-.content .related-product {
-	height: auto;
-}
-
-.content .related-product .list-sepatu {
-	box-sizing: border-box;
-	width: 100%;
-	height: auto;
-}
-
-.content .related-product .list-sepatu .item {
-	width: 20%;
-	height: auto;
-	float: left;
-	position: relative;
-}
-
-.content .related-product .list-sepatu .item img {
-	width: 100%;
-	height: auto;
-}
-
-.content .related-product .list-sepatu .item a:hover {
-	opacity: 1;
-}
-
-@media screen and (min-width: 1200px) {
-	.content .image-product .main-image {
-		width: 550px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-}
-
-@media screen and (max-width: 576px) {
-	.content {
-		flex-direction: column;
-	}
-
-	.content .row1 {
-		flex-direction: column;
-		height: auto;
-	}
-	.content .image-product {
-		width: 100%;
-		flex-direction: column;
-	}
-
-	.content .info-product {
-		width: 90%;
-	}
-
-	.container .top-nav {
-		z-index: 5;
-	}
-
-	.content .image-product .thumb-image {
-		flex-direction: row;
-		order: 2;
-	}
-	.content .related-product .list-sepatu .item {
-		width: 50%;
-	}
 }

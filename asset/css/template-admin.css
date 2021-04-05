@@ -1,0 +1,231 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	display: flex;
+	height: 100vh;
+}
+
+.container .sidebar {
+	width: 200px;
+	background-color: #ff4669ff;
+	display: flex;
+	flex-direction: column;
+	transition: all 0.5s;
+}
+
+:root {
+	--padding-left: 40px;
+	--link-color: #fff;
+}
+
+.container .sidebar .top {
+	height: 15%;
+}
+
+.container .sidebar .top h2 {
+	padding-left: calc(var(--padding-left) - 10px);
+	margin-top: 60px;
+	color: var(--link-color);
+	font-weight: bold;
+	font-size: 1.3;
+}
+.container .sidebar .list-link {
+	width: 200px;
+	height: 70%;
+	display: flex;
+	flex-direction: column;
+}
+
+.container .sidebar .list-link .link {
+	position: relative;
+	height: 50px;
+	width: 100%;
+}
+
+.container .sidebar .list-link span {
+	height: 100%;
+	position: absolute;
+	width: 10px;
+	background-color: #fff;
+	transform: translateX(-100%);
+}
+
+.container .sidebar .list-link a {
+	display: inline-block;
+	width: 100%;
+	text-decoration: none;
+	color: var(--link-color);
+	padding-left: var(--padding-left);
+	line-height: 50px;
+	height: 50px;
+	box-sizing: border-box;
+}
+
+.container .sidebar .list-link .link:hover {
+	background-color: #e61e44ff;
+}
+
+.container .sidebar .list-link .link:hover span {
+	transform: translateX(0);
+}
+
+.container .sidebar .bott {
+	height: 15%;
+}
+
+.container .sidebar .bott a {
+	display: inline-block;
+	width: 150px;
+	border-radius: 30px;
+	background-color: #fff;
+	color: #ff4669ff;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	text-decoration: none;
+	margin-left: 25px;
+}
+
+.container .main {
+	width: 100%;
+}
+
+.container .top-nav {
+	background-color: #fff;
+	height: 60px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.container .top-nav .menu-toggle {
+	position: relative;
+	width: 30px;
+	height: 28px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-left: 20px;
+	display: none;
+}
+
+.container .top-nav .menu-toggle input {
+	position: absolute;
+	top: -1px;
+	left: -1px;
+	width: 30px;
+	height: 30px;
+	opacity: 0;
+	z-index: 2;
+	cursor: pointer;
+}
+
+.container .top-nav .menu-toggle span {
+	height: 3px;
+	width: 28px;
+	background-color: #ff4669ff;
+	border-radius: 1px;
+	transition: all 0.5s;
+}
+
+.container .top-nav .user-info p {
+	color: #ff4669ff;
+}
+
+.container .main {
+	background-color: #f5f5f5ff;
+}
+
+.container .main .content table {
+	background-color: #fff;
+}
+
+.container .main .content table .aksi {
+	display: flex;
+}
+
+.container .main .content table .aksi a {
+	text-decoration: none;
+	margin-right: 5px;
+}
+
+.btn {
+	border-radius: 5px;
+	color: #fff;
+	text-align: center;
+	padding: 2px 5px;
+}
+
+.btn-detail {
+	background-color: rgb(38, 116, 180);
+}
+
+.btn-delete {
+	background-color: rgb(207, 34, 28);
+}
+
+.btn-update {
+	background-color: rgb(207, 165, 28);
+}
+
+.container .top-nav .menu-toggle span:nth-child(2) {
+	transform-origin: 0 0;
+}
+
+.container .top-nav .menu-toggle span:nth-child(4) {
+	transform-origin: 0 100%;
+}
+
+.container .top-nav .menu-toggle input:checked ~ span:nth-child(2) {
+	transform: rotate(45deg) translate(5px, 0px);
+}
+
+.container .top-nav .menu-toggle input:checked ~ span:nth-child(3) {
+	transform: translateX(-200px);
+	opacity: 0;
+}
+
+.container .top-nav .menu-toggle input:checked ~ span:nth-child(4) {
+	transform: rotate(-45deg) translate(4px, 0px);
+}
+
+.container .main .top-nav .user-info {
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.container .main .top-nav .user-info .name {
+	margin-right: 20px;
+}
+
+.container .top-nav img {
+	width: 40px;
+	height: 40px;
+	margin-right: 20px;
+}
+
+@media screen and (max-width: 768px) {
+	.container .main .top-nav {
+		justify-content: space-between;
+	}
+
+	.container .main .top-nav .menu-toggle {
+		display: flex;
+	}
+}
+
+@media screen and (max-width: 576px) {
+	.container .sidebar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		height: 100vh;
+		transform: translateX(-100%);
+	}
+}

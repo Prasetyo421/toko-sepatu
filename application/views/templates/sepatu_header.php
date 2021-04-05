@@ -24,9 +24,9 @@
             <ul>
                 <li><a class="link" href="<?= base_url(); ?>home">Home</a></li>
                 <li><a class="link" href="#spec">Spesifikasi</a></li>
-                <li><a class="link" href="#">Size chart</a></li>
-                <li><a class="link" href="#">About</a></li>
-                <li><a class="link" href="#">Contact us</a></li>
+                <li><a class="link" href="#size-chart">Size chart</a></li>
+                <li><a class="link" href="#about">About</a></li>
+                <li><a class="link" href="#contact-us">Contact us</a></li>
             </ul>
 
             <a class="login" href="<?= base_url(); ?>auth">Login</a>

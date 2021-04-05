@@ -28,7 +28,102 @@ class Sepatu_model extends CI_Model
 
     public function getDataSepatuById($id)
     {
-        return $this->db->get_where('sepatu', ['id' => $id])->row_array();
+        $result = $this->db->get_where('sepatu', ['id' => $id])->row_array();
+        $result['gambar'] = json_decode($result['gambar'], true);
+        $result['ukuran'] = json_decode($result['ukuran'], true);
+        $result['spesifikasi'] = json_decode($result['spesifikasi'], true);
+        return $result;
+    }
+
+    private function getDataBySize($size)
+    {
+        $this->db->like('nama', $size);
+        return $this->db->get('sepatu')->result_array();
+    }
+
+    public function getRelatedSepatu($sepatu)
+    {
+        $tipe = $this->getType($sepatu);
+        $kesamaanTipe = $this->getDataSepatuByType($tipe);
+
+        // kesamaan ukuran = low / high
+        $ukuran = $this->getSize($sepatu);
+        $kesamaanUkuran = $this->getDataBySize($ukuran);
+
+        $warna = explode(' ', $sepatu);
+        $warna = strtolower(end($warna));
+
+        $kesamaanTipeUkuran = [];
+        $kesamaanTipeWarna = [];
+        $indexTipeWarna = 0;
+        $indexTipeUkuran = 0;
+        for ($i = 0; $i < count($kesamaanTipe); $i++) {
+            $nama = $kesamaanTipe[$i]['nama'];
+            if ($nama != $sepatu) {
+                $nama = explode(' ', strtolower($nama));
+                if (in_array($ukuran, $nama)) {
+                    $kesamaanTipeUkuran[$indexTipeUkuran] = $kesamaanTipe[$i];
+                    $indexTipeUkuran++;
+                }
+                if (in_array($warna, $nama)) {
+                    $kesamaanTipeWarna[$indexTipeWarna] = $kesamaanTipe[$i];
+                    $indexTipeWarna++;
+                }
+            }
+        }
+
+        $kesamaanUkuranWarna = [];
+        $indexUkuranWarna = 0;
+        for ($i = 0; $i < count($kesamaanUkuran); $i++) {
+            $nama = $kesamaanUkuran[$i]['nama'];
+            if ($nama != $sepatu) {
+                $nama = explode(' ', strtolower($nama));
+                if (in_array($warna, $nama)) {
+                    $kesamaanUkuranWarna[$indexUkuranWarna] = $kesamaanUkuran[$i];
+                }
+            }
+        }
+
+        $related = array_merge($kesamaanTipeUkuran, $kesamaanTipeWarna, $kesamaanUkuranWarna);
+
+        if (count($related) > 5) {
+            return $related;
+        } else {
+            return $this->db->get('sepatu', 10, 0)->result_array();
+        }
+    }
+
+    private function getSize($namaSepatu)
+    {
+        $namaSepatu = explode(' ', strtolower($namaSepatu));
+        $this->db->select('ukuran');
+        $result = $this->db->get('type_ukuran')->result_array();
+        for ($i = 0; $i < count($result); $i++) {
+            $listTipeUkuran[$i] = $result[$i]['ukuran'];
+        }
+
+        for ($i = 0; $i < count($listTipeUkuran); $i++) {
+            if (in_array($listTipeUkuran[$i], $namaSepatu)) {
+                return $listTipeUkuran[$i];
+            }
+        }
+    }
+
+    private function getType($namaSepatu)
+    {
+        $namaSepatu = explode(' ', strtolower($namaSepatu));
+        $this->db->select('type');
+        $result = $this->db->get('type_sepatu')->result_array();
+        for ($i = 0; $i < count($result); $i++) {
+            $listTipeSepatu[$i] = $result[$i]['type'];
+        }
+
+        for ($i = 0; $i < count($listTipeSepatu); $i++) {
+
+            if (in_array($listTipeSepatu[$i], $namaSepatu)) {
+                return $listTipeSepatu[$i];
+            }
+        }
     }
 
     // API

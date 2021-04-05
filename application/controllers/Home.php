@@ -14,6 +14,7 @@ class Home extends CI_Controller
     {
         $data['judul'] = 'Halaman Home';
         $data['css'] = 'home-sepatu.css';
+        $data['js'] = 'home sepatu.js';
 
         $this->db->select('type');
         $tipe = $this->db->get('type_sepatu')->result_array();
@@ -27,8 +28,8 @@ class Home extends CI_Controller
 
 
             for ($j = 0; $j < count($data['dataSepatu'][$tipe[$i]]); $j++) {
-                $data['dataSepatu'][$tipe[$i]][$j]['ukuran'] = json_decode($data['dataSepatu'][$tipe[$i]][$j]['ukuran']);
-                $data['dataSepatu'][$tipe[$i]][$j]['gambar'] = json_decode($data['dataSepatu'][$tipe[$i]][$j]['gambar']);
+                $data['dataSepatu'][$tipe[$i]][$j]['ukuran'] = json_decode($data['dataSepatu'][$tipe[$i]][$j]['ukuran'], true);
+                $data['dataSepatu'][$tipe[$i]][$j]['gambar'] = json_decode($data['dataSepatu'][$tipe[$i]][$j]['gambar'], true);
             }
         }
 
@@ -38,7 +39,7 @@ class Home extends CI_Controller
 
         $this->load->view('templates/sepatu_header', $data);
         $this->load->view('sepatu/home', $data);
-        $this->load->view('templates/sepatu_footer');
+        $this->load->view('templates/sepatu_footer', $data);
     }
 
     public function detailSepatu($id)
@@ -48,16 +49,20 @@ class Home extends CI_Controller
         $data['js'] = 'detail sepatu.js';
 
         $data['sepatu'] = $this->sepatu->getDataSepatuById($id);
-        $data['sepatu']['ukuran'] = json_decode($data['sepatu']['ukuran']);
-        $data['sepatu']['gambar'] = json_decode($data['sepatu']['gambar']);
         $data['sepatu']['harga'] = $this->formatHarga($data['sepatu']['harga']);
 
-        // var_dump($data['sepatu']);
+        $namaSepatu = $data['sepatu']['nama'];
+        $data['related'] = $this->sepatu->getRelatedSepatu($namaSepatu);
+        for ($i = 0; $i < count($data['related']); $i++) {
+            $data['related'][$i]['ukuran'] = json_decode($data['related'][$i]['ukuran'], true);
+            $data['related'][$i]['gambar'] = json_decode($data['related'][$i]['gambar'], true);
+        }
+        // var_dump($data['related']);
         // die;
 
         $this->load->view('templates/sepatu_header', $data);
         $this->load->view('sepatu/detail', $data);
-        $this->load->view('templates/sepatu_footer');
+        $this->load->view('templates/sepatu_footer', $data);
     }
 
     private function formatHarga($str = '')

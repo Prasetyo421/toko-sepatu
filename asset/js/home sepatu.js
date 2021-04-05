@@ -10,36 +10,29 @@ const responsiveNav = document.getElementsByClassName('responsive-nav')[0];
 
 var move = 0;
 var widthListSepatu = $('.list-sepatu').width();
+var width = $('.item').width();
+console.log(width);
 
 $('.pref').click(function(){
+   var type = $(this).data('type');
    move = move + 200;
-   $('.list-sepatu').css('left', move + 'px');
+   if( move <= 0){
+      $('.list-sepatu-' + type).css('left', move + 'px');
+   }else {
+      move = 0;
+   }
 })
 
 $('.next').click(function(){
+   var type = $(this).data('type');
    move = move + -200;
-   $('.list-sepatu').css('left', move + 'px');
+   if ( (move + $('.list-sepatu-' + type).width()) > 0){
+      console.log($('.list-sepatu-' + type).width());
+      $('.list-sepatu-' + type).css('left', move + 'px');
+   }else {
+      move = -1 * ($('.list-sepatu-' + type).width() - 200);
+   }
 })
-
-// $('.pref').click(function(){
-//    i++;
-//    // j=0;
-//    moveL = (-move*i) + (move*j)
-//    $('.list-sepatu').css('left', -moveL + 'px');
-//    $('.list-sepatu').css('right', 0 + 'px');
-//    console.log(moveL);
-
-// })
-
-// $('.next').click(function(){
-//    j++;
-//    // i=0;
-//    moveR = (-move*j) + (move*i);
-//    $('.list-sepatu').css('right', moveR + 'px');
-//    $('.list-sepatu').css('left', 0 + 'px');
-//    console.log(moveR);
-
-// })
 
 menuToggle.addEventListener('click', function(){
    nav.classList.toggle('slide');
@@ -50,28 +43,17 @@ window.addEventListener("scroll", function(){
    topNav.classList.toggle('sticky', window.scrollY > 0);
 });
 
-bar.addEventListener('click', function(){
+$('.bars').click(function(){
    console.log('ok');
-   bars.style.display = 'none';
+   $(this).hide();
+   responsiveNav.style.display = 'block';
    responsiveNav.style.display = 'block';
    container.style.width = '100vh';
    container.style.overflow = 'hidden';
-});
+})
 
-cancle.addEventListener('click', function(){
+$('.cancle').click(function(){
    responsiveNav.style.display = 'none';
-   bars.style.display = 'block';
-});
-
-// $(".bars").click(function(){
-//    $(this).hide();
-//    $(".responsive-nav").show();
-//    $(".container").css('width', '100vh');
-//    $(".container").css('overflow', 'hidden');
-// });
-
-// $(".cancle").click(function(){
-//    $(".responsive-nav").hide();
-//    $(".bars").show();
-// });
+   $('.bars').css('display', 'block');
+})
 

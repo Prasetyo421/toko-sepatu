@@ -32,6 +32,8 @@ body {
 }
 
 .content .sepatu {
+	display: flex;
+	flex-direction: column;
 	height: auto;
 	margin-bottom: 3rem;
 	margin-top: 3rem;
@@ -51,19 +53,34 @@ body {
 	margin-bottom: 1rem;
 }
 
-.content .sepatu .type-sepatu .list-sepatu {
-	width: 100%;
-	overflow-x: auto;
+/* show & list WEB */
+
+.content .sepatu .type-sepatu .show {
 	display: flex;
+	justify-content: center;
+}
+
+.content .sepatu .type-sepatu .list-sepatu {
+	/* width: auto; */
+	overflow-x: auto;
+	display: inline-block;
 	position: relative;
 }
 
-.content .sepatu .type-sepatu .list-sepatu.list-sepatu::-webkit-scrollbar {
+/* akhir */
+
+.content .sepatu .type-sepatu .pref,
+.content .sepatu .type-sepatu .next {
+	display: none;
+	cursor: pointer;
+}
+
+.content .sepatu .type-sepatu .list-sepatu::-webkit-scrollbar {
 	background-color: transparent;
 	width: 5px;
 }
 
-.content .sepatu .type-sepatu .list-sepatu.list-sepatu::-moz-scrollbar {
+.content .sepatu .type-sepatu .list-sepatu::-moz-scrollbar {
 	background-color: transparent;
 	width: 5px;
 }
@@ -125,15 +142,34 @@ body {
 	clear: both;
 }
 
+.spesifikasi .row {
+	display: flex;
+	justify-content: space-evenly;
+}
+
 .spesifikasi .item-spec {
 	width: 200px;
-	margin-left: 2rem;
+	/* margin-left: 2rem;
 	margin-bottom: 2rem;
-	float: left;
+	float: left; */
 }
 
 .spesifikasi .item-spec h3 {
 	text-align: center;
+}
+
+#size-chart {
+	clear: both;
+}
+
+.size-chart img {
+	width: 50vw;
+	margin: 0 25vw;
+}
+
+.content .related-product {
+	width: 100%;
+	height: 230px;
 }
 
 @media screen and (max-width: 1000px) {
@@ -181,6 +217,7 @@ body {
 	}
 
 	.content .sepatu .type-sepatu .show {
+		display: flex;
 		position: relative;
 		margin-left: auto;
 		margin-right: auto;
@@ -194,8 +231,6 @@ body {
 		position: absolute;
 		left: 0;
 		margin: 0;
-		justify-content: unset;
-		width: auto;
 	}
 
 	.content .sepatu .type-sepatu .list-sepatu .item {
@@ -219,6 +254,7 @@ body {
 		left: 8%;
 		width: 20px;
 		height: 20px;
+		display: block;
 	}
 
 	.content .sepatu .type-sepatu .pref i {
@@ -231,9 +267,15 @@ body {
 		right: 10%;
 		width: 20px;
 		height: 20px;
+		display: block;
 	}
 
 	.content .sepatu .type-sepatu .next i {
 		font-size: 30px;
+	}
+
+	.size-chart img {
+		width: 100vw;
+		margin: 0;
 	}
 }

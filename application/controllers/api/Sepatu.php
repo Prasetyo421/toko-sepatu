@@ -11,6 +11,7 @@ class Sepatu extends RestController
         // Construct the parent class
         parent::__construct();
         $this->load->model('Sepatu_model', 'sepatu');
+        $this->methods['index_get']['limit'] = 2;
     }
 
     public function index_get()

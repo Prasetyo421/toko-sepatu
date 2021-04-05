@@ -1,0 +1,27 @@
+.content {
+	width: 100%;
+}
+
+.content .row {
+	width: 70%;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+
+.content .row form {
+	display: flex;
+	flex-direction: column;
+}
+
+.content .row form .form-grup .ukuran {
+	display: flex;
+}
+
+.content .row form .preview-image {
+	width: 100%;
+}
+
+.content .row form .preview-image img {
+	width: 20%;
+	height: auto;
+}

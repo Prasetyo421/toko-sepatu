@@ -1,21 +1,9 @@
 </div>
 </div>
-</div>
 
-<script>
-    const checkbox = document.getElementById('checkbox-menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-    const menuToggle = document.getElementById('menu-toggle');
-
-    function checkboxClick() {
-        if (checkbox.checked == true) {
-            sidebar.style.width = "200px";
-            // sidebar.style.position = "absolute";
-        } else {
-            sidebar.style.width = "0px";
-        }
-    }
-</script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="<?= base_url() ?>asset/js/template admin.js"></script>
+<script src="<?= base_url() ?>asset/js/<?= $js ?>"></script>
 </body>
 
 </html>
