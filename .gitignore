@@ -2,8 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,codeigniter
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,visualstudiocode,codeigniter
 
-asset/image/
-asset/img/
+asset/
 
 ### CodeIgniter ###
 */config/development
