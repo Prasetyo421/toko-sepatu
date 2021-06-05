@@ -9,7 +9,6 @@ class Home extends CI_Controller
         $this->load->model('Sepatu_model', 'sepatu');
     }
 
-
     public function index()
     {
         $data['judul'] = 'Halaman Home';
@@ -23,19 +22,11 @@ class Home extends CI_Controller
         }
 
         for ($i = 0; $i < count($tipe); $i++) {
-            // var_dump($tipe[$i]);
-            $data['dataSepatu'][$tipe[$i]] = $this->sepatu->getDataSepatuByType($tipe[$i]);
-
-
-            for ($j = 0; $j < count($data['dataSepatu'][$tipe[$i]]); $j++) {
-                $data['dataSepatu'][$tipe[$i]][$j]['ukuran'] = json_decode($data['dataSepatu'][$tipe[$i]][$j]['ukuran'], true);
-                $data['dataSepatu'][$tipe[$i]][$j]['gambar'] = json_decode($data['dataSepatu'][$tipe[$i]][$j]['gambar'], true);
-            }
+            $data['data_sepatu'][$tipe[$i]] = $this->sepatu->getDataShoesByType($tipe[$i]);
         }
 
         $data['type'] = $tipe;
-
-        // var_dump($data['dataSepatu']);
+        $data['test'] = $this->sepatu->getDataShoesByType('ivan');
 
         $this->load->view('templates/sepatu_header', $data);
         $this->load->view('sepatu/home', $data);
@@ -48,17 +39,12 @@ class Home extends CI_Controller
         $data['css'] = 'detail-sepatu.css';
         $data['js'] = 'detail sepatu.js';
 
-        $data['sepatu'] = $this->sepatu->getDataSepatuById($id);
-        $data['sepatu']['harga'] = $this->formatHarga($data['sepatu']['harga']);
+        $data['shoes'] = $this->sepatu->getDataShoesById($id);
+        // var_dump($data['shoes']);
+        $data['shoes']['price'] = $this->formatHarga($data['shoes']['price']);
 
-        $namaSepatu = $data['sepatu']['nama'];
-        $data['related'] = $this->sepatu->getRelatedSepatu($namaSepatu);
-        for ($i = 0; $i < count($data['related']); $i++) {
-            $data['related'][$i]['ukuran'] = json_decode($data['related'][$i]['ukuran'], true);
-            $data['related'][$i]['gambar'] = json_decode($data['related'][$i]['gambar'], true);
-        }
-        // var_dump($data['related']);
-        // die;
+        $shoes_name = $data['shoes']['shoes_name'];
+        $data['related'] = $this->sepatu->getRelatedSepatu($shoes_name);
 
         $this->load->view('templates/sepatu_header', $data);
         $this->load->view('sepatu/detail', $data);

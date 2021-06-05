@@ -60,6 +60,15 @@ class Auth extends CI_Controller
         }
     }
 
+    public function login_google()
+    {
+        require_once APPPATH . "libraries/vendor/autoload.php";
+
+        $google_client = new $Google_Client();
+        $google_client->setClientId('1073361218611-ngc6dv9868f2eodnigrjm5nm9u23tllv.apps.googleusercontent.com');
+        $google_client->setClientSecret('dauEkR89TUmp7Vb-bHvwUtCZ');
+    }
+
     public function registration()
     {
         $this->form_validation->set_rules('name', 'Name', 'required|trim');

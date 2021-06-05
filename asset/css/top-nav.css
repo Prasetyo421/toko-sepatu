@@ -113,6 +113,13 @@
 
 /* mobile */
 @media screen and (max-width: 578px) {
+	/* .container .top-nav ul::before {
+		content: "";
+		background-color: aqua;
+		width: 100vw;
+		height: 100vh;
+	} */
+
 	.container .top-nav ul {
 		position: absolute;
 		right: 0;
@@ -134,5 +141,4 @@
 	.container .top-nav .menu-toggle {
 		display: flex;
 	}
-
 }

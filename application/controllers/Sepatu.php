@@ -58,4 +58,36 @@ class Sepatu extends CI_Controller
         $this->load->view('templates/sepatu_header', $data);
         $this->load->view('sepatu/ubah');
     }
+
+    public function pindahData($id)
+    {
+        $sepatu = $this->sepatu->getDataSepatuById($id);
+        // var_dump($sepatu);
+
+        $data['shoes_name'] = $sepatu['nama'];
+        $data['sizes'] = $sepatu['ukuran'];
+        $data['price'] = $sepatu['harga'];
+        $data['description'] = $sepatu['deskripsi'];
+        $data['specifications'] = $sepatu['spesifikasi'];
+        $data['images'] = $sepatu['gambar']['image'];
+        $data['thumb'] = $sepatu['gambar']['thumb'];
+
+        // echo $data['shoes_name'] . '</br>';
+        // var_dump($data['sizes']);
+        // echo '</br>';
+        // var_dump($data['price']);
+        // echo '</br>';
+        // var_dump($data['description']);
+        // echo '</br>';
+        // var_dump($data['specifications']);
+        // echo '</br>';
+        // var_dump($data['images']);
+        // echo '</br>';
+        // var_dump($data['thumb']);
+        // echo '</br>';
+
+        $this->sepatu->insertShoesData($data);
+
+        redirect('');
+    }
 }

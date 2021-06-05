@@ -13,8 +13,8 @@ class Admin extends CI_Controller
     public function index()
     {
         if ($this->session->userdata['email']) {
-            $data['sepatu'] = $this->db->get('sepatu')->result_array();
-            $data['css'] = 'index-admin.css';
+            $data['shoes'] = $this->db->get('shoes')->result_array();
+            $data['css'] = ['index-admin.css'];
             $data['js'] = 'template admin.js';
 
             $this->load->view('templates/header_admin', $data);
@@ -29,15 +29,15 @@ class Admin extends CI_Controller
 
     public function detail($id)
     {
-        $data['css'] = 'detail-sepatu-admin.css';
+        $data['css'] = ['detail-sepatu-admin.css'];
         $data['js'] = 'detail sepatu admin.js';
-        $data['sepatu'] = $this->sepatu->getDataSepatuById($id);
+        $data['shoes'] = $this->sepatu->getDataShoesById($id);
 
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar');
         $this->load->view('templates/top_bar_admin');
         $this->load->view('admin/detail_sepatu', $data);
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/footer_admin', $data);
     }
 
     public function update_sepatu($id)
@@ -68,8 +68,29 @@ class Admin extends CI_Controller
                 // tidak ada gambar yang di upload,
                 // menggunakan file lama
 
+                $this->db->delete('specifications', ['id_shoes' => '']);
+
+                $shoes_name = htmlspecialchars($this->input->post('name-sepatu'), true);
+                $shoes_price = htmlspecialchars($this->input->post('price'), true);
+                $shoes_desc = htmlspecialchars($this->input->post('deskripsi'), true);
+                $shoes_data = [
+                    'shoes_name' => $shoes_name,
+                    'price' => $shoes_price,
+                    'description' => $shoes_desc
+                ];
+
+                $sizes = [];
+                $specifications = [];
                 $ukuran = $this->input->post('size');
                 $spesifikasi = $this->input->post('spesifikasi');
+
+                for ($i = 0; $i < count($ukuran); $i++) {
+                    $sizes[$i] = [
+                        'size' => $ukuran[$i],
+                        'id_shoes' => ''
+                    ];
+                }
+
 
                 $ukuranJSON = json_encode($ukuran);
                 $spesifikasiJSON = json_encode($spesifikasi);
@@ -191,13 +212,13 @@ class Admin extends CI_Controller
 
     public function delete($id)
     {
-        $sepatu = $this->sepatu->getDataSepatuById($id);
-        for ($i = 0; $i < count($sepatu['gambar']['image']); $i++) {
-            if (!unlink('./asset/image/sepatu/' . $sepatu['gambar']['image'][$i])) {
+        $shoes = $this->sepatu->getDataShoesById($id);
+        for ($i = 0; $i < count($shoes['image']); $i++) {
+            if (!unlink('./asset/image/sepatu/' . $shoes['image'][$i]['image_name'])) {
                 echo "You have an error";
             }
 
-            if (!unlink('./asset/image/sepatu/thumb/' . $sepatu['gambar']['thumb'][$i])) {
+            if (!unlink('./asset/image/sepatu/thumb/' . $shoes['thumb'][$i]['thumb_name'])) {
                 echo "You have an error, thumb";
             }
         }
@@ -213,7 +234,7 @@ class Admin extends CI_Controller
 
     public function tambah_sepatu()
     {
-        $data['css'] = 'tambah-sepatu.css';
+        $data['css'] = ['tambah-sepatu.css'];
         $data['js'] = 'tambah sepatu.js';
         $data['ukuran'] = $this->db->get('ukuran')->result_array();
 
@@ -297,22 +318,74 @@ class Admin extends CI_Controller
                 $ukuran = $this->input->post('size');
                 $spesifikasi = $this->input->post('spesifikasi');
 
-                $ukuranJSON = json_encode($ukuran);
-                $spesifikasiJSON = json_encode($spesifikasi);
-                $gambarJSON = json_encode($gambar);
+                var_dump($ukuran);
+                echo '<br>';
+                var_dump($spesifikasi);
+                echo '<br>';
+                var_dump($gambar['image']);
+                echo '<br>';
+                var_dump($gambar['thumb']);
+                // die;
 
-                $data = [
-                    'nama' => htmlspecialchars($this->input->post('name-sepatu'), true),
-                    'ukuran' => $ukuranJSON,
-                    'harga' => htmlspecialchars($this->input->post('price'), true),
-                    'deskripsi' => htmlspecialchars($this->input->post('deskripsi'), true),
-                    'spesifikasi' =>  $spesifikasiJSON,
-                    'gambar' => $gambarJSON
+                $shoes_name = htmlspecialchars($this->input->post('name-sepatu'), true);
+                $shoes_data = [
+                    'shoes_name' => $shoes_name,
+                    'description' => htmlspecialchars($this->input->post('deskripsi'), true),
+                    'price' => htmlspecialchars($this->input->post('price'), true)
                 ];
 
 
-                $query = $this->db->insert('sepatu', $data);
-                if ($query == false) {
+                $this->db->select('id');
+                $id_shoes = $this->db->get_where('shoes', ['shoes_name' => $shoes_name])->result_array()[0]['id'];
+
+                $sizes = [];
+                for ($i = 0; $i < count($ukuran); $i++) {
+                    $sizes[$i] = [
+                        'size' => $ukuran[$i],
+                        'id_shoes' => $id_shoes
+                    ];
+                }
+
+                $specifications = [];
+                for ($i = 0; $i < count($spesifikasi); $i++) {
+                    $specifications[$i] = [
+                        'spec' => $spesifikasi[$i],
+                        'id_shoes' => $id_shoes
+                    ];
+                }
+
+                $images = [];
+                $thumb = [];
+                for ($i = 0; $i < count($gambar['image']); $i++) {
+                    $images[$i] = [
+                        'image_name' => $gambar['image'][$i],
+                        'id_shoes' => $id_shoes
+                    ];
+                    $thumb[$i] = [
+                        'thumb_name' => $gambar['thumb'][$i],
+                        'id_shoes' => $id_shoes
+                    ];
+                }
+
+                $insertShoes = $this->db->insert('shoes', $shoes_data);
+                $insertSizes = $this->db->insert_batch('sizes', $sizes);
+                $insertSpec = $this->db->insert_batch('specifications', $specifications);
+                $insertImages = $this->db->insert_batch('images', $images);
+                $insertThumb = $this->db->insert_batch('thumb', $thumb);
+
+                if ($insertShoes == false) {
+                    var_dump($this->db->display_error());
+                    echo ('<br>');
+                } elseif ($insertSizes == false) {
+                    var_dump($this->db->display_error());
+                    echo ('<br>');
+                } elseif ($insertSpec == false) {
+                    var_dump($this->db->display_error());
+                    echo ('<br>');
+                } elseif ($insertImages == false) {
+                    var_dump($this->db->display_error());
+                    echo ('<br>');
+                } elseif ($insertThumb == false) {
                     var_dump($this->db->display_error());
                     echo ('<br>');
                 } else {

@@ -1,3 +1,4 @@
+<!-- <?php var_dump(APPPATH) ?> -->
 <div class="content">
     <div class="hero-image">
         <picture>
@@ -19,10 +20,10 @@
 
                     <div class="list-sepatu list-sepatu-<?= $type[$i] ?>">
 
-                        <?php foreach ($dataSepatu[$type[$i]] as $item) : ?>
+                        <?php foreach ($data_sepatu[$type[$i]] as $item) : ?>
                             <div class="item">
-                                <img src="<?= base_url(); ?>asset/image/sepatu/<?= $item['gambar']['image'][0]; ?>" alt="">
-                                <p><?= $item['nama'] ?></p>
+                                <img src="<?= base_url(); ?>asset/image/sepatu/<?= $item['images'][0]['image_name']; ?>" alt="">
+                                <p><?= $item['shoes_name'] ?></p>
                                 <a href="<?= base_url(); ?>home/detailSepatu/<?= $item['id']; ?>"></a>
                             </div>
 
@@ -56,6 +57,12 @@
 
         <div id="size-chart" class="size-chart">
             <img src="./asset/img/size-chart.png" alt="">
+        </div>
+
+        <div class="about" id="about">
+            <h1>About</h1>
+            <p>Patrobas adalah brand sepatu casual yang telah berdiri sejak tahun 2014.</p>
+            <p>Merek asal kota Tangerang Selatan ini memiliki logo "PB", yang merupakan singkatan dari "price" dan "benefit". Tentu saja, sepatu buatan mereka mempunyai banderol harga yang terjangkau, tapi berkualitas.</p>
         </div>
     </div>
 </div>

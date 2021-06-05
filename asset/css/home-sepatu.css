@@ -63,7 +63,7 @@ body {
 .content .sepatu .type-sepatu .list-sepatu {
 	/* width: auto; */
 	overflow-x: auto;
-	display: inline-block;
+	display: flex;
 	position: relative;
 }
 
@@ -172,6 +172,16 @@ body {
 	height: 230px;
 }
 
+.about {
+	width: 50%;
+	height: auto;
+	margin: 0 auto;
+}
+
+.about h1 {
+	text-align: center;
+}
+
 @media screen and (max-width: 1000px) {
 	.container .content .hero-image img {
 		height: auto;
@@ -274,8 +284,22 @@ body {
 		font-size: 30px;
 	}
 
+	.spesifikasi .row {
+		flex-direction: column;
+	}
+
+	.spesifikasi .row .item-spec {
+		width: 90%;
+		margin: 0 5% 1rem 5%;
+	}
+
 	.size-chart img {
 		width: 100vw;
 		margin: 0;
+	}
+
+	.about {
+		width: 90%;
+		margin-left: 5%;
 	}
 }

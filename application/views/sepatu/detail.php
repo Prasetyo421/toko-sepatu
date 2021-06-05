@@ -2,14 +2,14 @@
     <div class="row1">
         <div class="image-product">
             <div class="thumb-image">
-                <?php for ($i = 0; $i < count($sepatu['gambar']['thumb']); $i++) : ?>
-                    <span></a><img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $sepatu['gambar']['thumb'][$i]; ?>" alt="" data-image="<?= $i ?>" data-id="<?= $sepatu['id']; ?>" class="thumb"></span>
+                <?php for ($i = 0; $i < count($shoes['thumb']); $i++) : ?>
+                    <span></a><img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $shoes['thumb'][$i]['thumb_name']; ?>" alt="" data-image="<?= $i ?>" data-id="<?= $shoes['id']; ?>" class="thumb"></span>
                 <?php endfor; ?>
             </div>
             <div class="main-image">
                 <div class="image-content">
-                    <?php for ($i = 0; $i < count($sepatu['gambar']['image']); $i++) : ?>
-                        <img src="<?= base_url(); ?>asset/image/sepatu/<?= $sepatu['gambar']['image'][$i]; ?>" alt="">
+                    <?php for ($i = 0; $i < count($shoes['images']); $i++) : ?>
+                        <img src="<?= base_url(); ?>asset/image/sepatu/<?= $shoes['images'][$i]['image_name']; ?>" alt="">
                     <?php endfor; ?>
                 </div>
             </div>
@@ -17,30 +17,51 @@
         </div>
 
         <div class="info-product">
-            <h1><?= $sepatu['nama'] ?></h1>
-            <p class="harga">Rp <?= $sepatu['harga'] ?></p>
+            <h1><?= $shoes['shoes_name'] ?></h1>
+            <p class="harga">Rp <?= $shoes['price'] ?></p>
 
             <h2>Deskripsi</h2>
-            <p class="deskripsi"><?= $sepatu['deskripsi']; ?></p>
+            <p class="deskripsi"><?= $shoes['description']; ?></p>
             <h2>Spesifikasi</h2>
             <ul>
-                <?php foreach ($sepatu['spesifikasi'] as $spec) : ?>
-                    <li><?= $spec ?></li>
+                <?php foreach ($shoes['specifications'] as $spec) : ?>
+                    <li><?= $spec['spec'] ?></li>
                 <?php endforeach; ?>
             </ul>
+            <form action="<?= base_url(); ?>user/chart" method="POST">
+                <div class="sizes">
+                    <input type="hidden" name="size" id="size">
+                    <?php foreach ($shoes['sizes'] as $size) : ?>
+                        <span onclick="setSize(this)" data-size="<?= $size['size'] ?>"><?= $size['size'] ?></span>
+                    <?php endforeach; ?>
+                </div>
+                <div class="shop">
+                    <div class="amount">
+                        <!-- <span id="amount"></span> -->
+                        <input type="text" name="amount" id="amount">
+                        <div class="amount-up" onclick="amountUp()">
+                            <i class="fas fa-chevron-up"></i>
+                        </div>
+                        <div class="amount-down" onclick="amountDown()">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <!-- <input hidden name="amount" value="1"> -->
+                    <input hidden name="id" value="<?= $shoes['id'] ?>">
+                    <button type="submit" name="btn-shop" id="btn-shop" class="shop-now">Shop Now</button>
+                </div>
+            </form>
         </div>
+
+
     </div>
 
     <div class="related-product">
-        <div class="list-sepatu">
-            <?php for ($i = 0; $i < count($related); $i++) : ?>
-                <div class="item">
-                    <a href="<?= base_url(); ?>home/detailSepatu/<?= $related[$i]['id']; ?>">
-                        <img src="<?= base_url() ?>asset/image/sepatu/thumb/<?= $related[$i]['gambar']['thumb'][0] ?>" alt="">
-                    </a>
-                    <!-- <p><?= $related[$i]['nama'] ?></p> -->
-                </div>
-            <?php endfor; ?>
-        </div>
+
+        <?php for ($i = 0; $i < count($related); $i++) : ?>
+            <a href="<?= base_url(); ?>home/detailSepatu/<?= $related[$i]['id'] ?>">
+                <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $related[$i]['thumb'][0]['thumb_name'] ?>" alt="<?= $related[$i]['thumb'][0]['thumb_name'] ?>">
+            </a>
+        <?php endfor; ?>
     </div>
 </div>
