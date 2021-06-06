@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\map;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin extends CI_Controller
@@ -43,11 +46,15 @@ class Admin extends CI_Controller
     public function update_sepatu($id)
     {
         $data['judul'] = 'Halaman Update Sepatu';
-        $data['css'] = 'update-sepatu.css';
+        $data['css'] = ['update-sepatu.css'];
         $data['js'] = 'update sepatu.js';
 
-        $data['ukuran'] = $this->db->get('ukuran')->result_array();
-        $data['sepatu'] = $this->sepatu->getDataSepatuById($id);
+        $this->db->select('size');
+        $getSizes = $this->db->get('ukuran')->result_array();
+        for ($i = 0; $i < count($getSizes); $i++) {
+            $data['sizes'][$i] = $getSizes[$i]['size'];
+        }
+        $data['shoes'] = $this->sepatu->getDataShoesById($id);
 
         $this->form_validation->set_rules('name-sepatu', 'Nama-Sepatu', 'required|trim', [
             'is_uniqed' => 'nama sepatu sudah ada di databse'
@@ -68,8 +75,6 @@ class Admin extends CI_Controller
                 // tidak ada gambar yang di upload,
                 // menggunakan file lama
 
-                $this->db->delete('specifications', ['id_shoes' => '']);
-
                 $shoes_name = htmlspecialchars($this->input->post('name-sepatu'), true);
                 $shoes_price = htmlspecialchars($this->input->post('price'), true);
                 $shoes_desc = htmlspecialchars($this->input->post('deskripsi'), true);
@@ -79,45 +84,62 @@ class Admin extends CI_Controller
                     'description' => $shoes_desc
                 ];
 
-                $sizes = [];
-                $specifications = [];
-                $ukuran = $this->input->post('size');
-                $spesifikasi = $this->input->post('spesifikasi');
+                $this->db->update('shoes', $shoes_data, ['id' => $id]);
 
+                // Update SIZES
+                $ukuran = $this->input->post('size');
+
+                for ($i = 0; $i < count($data['shoes']['sizes']); $i++) {
+                    if (!$this->db->delete('sizes', ['id' => $data['shoes']['sizes'][$i]['id']])) {
+                        var_dump($this->db->display_error());
+                    }
+                }
+
+                $sizeDataInsert = [];
                 for ($i = 0; $i < count($ukuran); $i++) {
-                    $sizes[$i] = [
+                    $sizeDataInsert[$i] = [
                         'size' => $ukuran[$i],
-                        'id_shoes' => ''
+                        'id_shoes' => $id
                     ];
                 }
 
-
-                $ukuranJSON = json_encode($ukuran);
-                $spesifikasiJSON = json_encode($spesifikasi);
-
-                $data = [
-                    'nama' => htmlspecialchars($this->input->post('name-sepatu'), true),
-                    'ukuran' => $ukuranJSON,
-                    'harga' => htmlspecialchars($this->input->post('price'), true),
-                    'deskripsi' => htmlspecialchars($this->input->post('deskripsi'), true),
-                    'spesifikasi' =>  $spesifikasiJSON,
-                ];
-
-                $query = $this->db->update('sepatu', $data, ['id' => $id]);
-                if ($query == false) {
+                if (!$this->db->insert_batch('sizes', $sizeDataInsert)) {
                     var_dump($this->db->display_error());
-                    echo ('<br>');
-                } else {
-                    $this->session->set_flashdata('message', '<div class="alert-success">Berhasil <strong>mengubah</strong> data sepatu</div>');
-                    echo "ok";
-                    redirect('admin/index');
                 }
+
+                // Akhir Update Sizes
+
+                // Update Spec
+                $spesifikasi = $this->input->post('spesifikasi');
+
+                for ($i = 0; $i < count($data['shoes']['specifications']); $i++) {
+                    if (!$this->db->delete('specifications', ['id' => $data['shoes']['specifications'][$i]['id']])) {
+                        var_dump($this->db->display_error());
+                    }
+                }
+
+                $specDataInsert = [];
+                for ($i = 0; $i < count($spesifikasi); $i++) {
+                    $specDataInsert[$i] = [
+                        'spec' => $spesifikasi[$i],
+                        'id_shoes' => $id
+                    ];
+                }
+
+                if (!$this->db->insert_batch('specifications', $specDataInsert)) {
+                    var_dump($this->db->display_error());
+                }
+
+                // Akhir Update spec
+
+                $this->session->set_flashdata('message', '<div class="alert-success">Berhasil <strong>mengubah</strong> data sepatu</div>');
+                redirect('admin');
             } else {
 
-                $jmlhGambarHps = count($data['sepatu']['gambar']['image']);
+                $jmlhGambarHps = count($data['shoes']['images']);
                 for ($i = 0; $i < $jmlhGambarHps; $i++) {
-                    $fileNameHps = $data['sepatu']['gambar']['image'][$i];
-                    $fileNameHpsThumb = $data['sepatu']['gambar']['thumb'][$i];
+                    $fileNameHps = $data['shoes']['images'][$i]['image_name'];
+                    $fileNameHpsThumb = $data['shoes']['thumb'][$i]['thumb_name'];
                     if (!unlink('./asset/image/sepatu/' . $fileNameHps)) {
                         echo 'You have an error';
                     }
@@ -132,8 +154,8 @@ class Admin extends CI_Controller
                 $gambar = [];
                 for ($i = 0; $i < $jumlahData; $i++) {
                     $tmpName = $_FILES['image']['tmp_name'][$i];
-                    $data = list($width, $height, $type, $attr) = getimagesize($tmpName);
-                    $ekstensi = explode('/', $data['mime']);
+                    $info = list($width, $height, $type, $attr) = getimagesize($tmpName);
+                    $ekstensi = explode('/', $info['mime']);
                     $ekstensi = $ekstensi[1];
 
                     // Inisialisasi
@@ -182,30 +204,98 @@ class Admin extends CI_Controller
                     }
                 }
 
+                // Update SIZES
                 $ukuran = $this->input->post('size');
+
+                var_dump($data);
+                for ($i = 0; $i < count($data['shoes']['sizes']); $i++) {
+                    if (!$this->db->delete('sizes', ['id' => $data['shoes']['sizes'][$i]['id']])) {
+                        var_dump($this->db->display_error());
+                    }
+                }
+
+                $sizeDataInsert = [];
+                for ($i = 0; $i < count($ukuran); $i++) {
+                    $sizeDataInsert[$i] = [
+                        'size' => $ukuran[$i],
+                        'id_shoes' => $id
+                    ];
+                }
+
+                if (!$this->db->insert_batch('sizes', $sizeDataInsert)) {
+                    var_dump($this->db->display_error());
+                }
+
+                // Akhir Update Sizes
+
+                // Update Spec
                 $spesifikasi = $this->input->post('spesifikasi');
 
-                $ukuranJSON = json_encode($ukuran);
-                $spesifikasiJSON = json_encode($spesifikasi);
-                $gambarJSON = json_encode($gambar);
-
-                $data = [
-                    'nama' => htmlspecialchars($this->input->post('name-sepatu'), true),
-                    'ukuran' => $ukuranJSON,
-                    'harga' => htmlspecialchars($this->input->post('price'), true),
-                    'deskripsi' => htmlspecialchars($this->input->post('deskripsi'), true),
-                    'spesifikasi' =>  $spesifikasiJSON,
-                    'gambar' => $gambarJSON
-                ];
-
-                $query = $this->db->update('sepatu', $data, ['id' => $id]);
-                if ($query == false) {
-                    var_dump($this->db->display_error());
-                    echo ('<br>');
-                } else {
-                    $this->session->set_flashdata('message', '<div class="alert-success">Berhasil <strong>mengubah</strong> data sepatu</div>');
-                    redirect('admin');
+                for ($i = 0; $i < count($data['shoes']['specifications']); $i++) {
+                    if (!$this->db->delete('specifications', ['id' => $data['shoes']['specifications'][$i]['id']])) {
+                        var_dump($this->db->display_error());
+                    }
                 }
+
+                $specDataInsert = [];
+                for ($i = 0; $i < count($spesifikasi); $i++) {
+                    $specDataInsert[$i] = [
+                        'spec' => $spesifikasi[$i],
+                        'id_shoes' => $id
+                    ];
+                }
+
+                if (!$this->db->insert_batch('specifications', $specDataInsert)) {
+                    var_dump($this->db->display_error());
+                }
+                // Akhir Update spec
+
+                // Update Image
+                $images = $gambar['image'];
+
+                for ($i = 0; $i < count($data['shoes']['images']); $i++) {
+                    if (!$this->db->delete('images', ['id' => $data['shoes']['images'][$i]['id']])) {
+                        var_dump($this->db->display_error());
+                    }
+                }
+
+                $imagescDataInsert = [];
+                for ($i = 0; $i < count($images); $i++) {
+                    $imagescDataInsert[$i] = [
+                        'image_name' => $images[$i],
+                        'id_shoes' => $id
+                    ];
+                }
+
+                if (!$this->db->insert_batch('images', $imagescDataInsert)) {
+                    var_dump($this->db->display_error());
+                }
+                // Akhir Update Images
+
+                // Update Thumb
+                $thumb = $gambar['thumb'];
+
+                for ($i = 0; $i < count($data['shoes']['thumb']); $i++) {
+                    if (!$this->db->delete('thumb', ['id' => $data['shoes']['thumb'][$i]['id']])) {
+                        var_dump($this->db->display_error());
+                    }
+                }
+
+                $thumbDataInsert = [];
+                for ($i = 0; $i < count($thumb); $i++) {
+                    $thumbDataInsert[$i] = [
+                        'thumb_name' => $thumb[$i],
+                        'id_shoes' => $id
+                    ];
+                }
+
+                if (!$this->db->insert_batch('thumb', $thumbDataInsert)) {
+                    var_dump($this->db->display_error());
+                }
+                // Akhir Update thumb
+
+                $this->session->set_flashdata('message', '<div class="alert-success">Berhasil <strong>mengubah</strong> data sepatu</div>');
+                redirect('admin');
             }
         }
     }
@@ -213,8 +303,8 @@ class Admin extends CI_Controller
     public function delete($id)
     {
         $shoes = $this->sepatu->getDataShoesById($id);
-        for ($i = 0; $i < count($shoes['image']); $i++) {
-            if (!unlink('./asset/image/sepatu/' . $shoes['image'][$i]['image_name'])) {
+        for ($i = 0; $i < count($shoes['images']); $i++) {
+            if (!unlink('./asset/image/sepatu/' . $shoes['images'][$i]['image_name'])) {
                 echo "You have an error";
             }
 
@@ -287,8 +377,8 @@ class Admin extends CI_Controller
                     $this->upload->initialize($config);
 
                     if (!$this->upload->do_upload('file')) {
-                        var_dump($this->upload->display_errors());
-                        die;
+                        // var_dump($this->upload->display_errors());
+                        // die;
                     } else {
                         $dataUpload = $this->upload->data();
 
@@ -333,7 +423,7 @@ class Admin extends CI_Controller
                     'description' => htmlspecialchars($this->input->post('deskripsi'), true),
                     'price' => htmlspecialchars($this->input->post('price'), true)
                 ];
-
+                $insertShoes = $this->db->insert('shoes', $shoes_data);
 
                 $this->db->select('id');
                 $id_shoes = $this->db->get_where('shoes', ['shoes_name' => $shoes_name])->result_array()[0]['id'];
@@ -367,7 +457,6 @@ class Admin extends CI_Controller
                     ];
                 }
 
-                $insertShoes = $this->db->insert('shoes', $shoes_data);
                 $insertSizes = $this->db->insert_batch('sizes', $sizes);
                 $insertSpec = $this->db->insert_batch('specifications', $specifications);
                 $insertImages = $this->db->insert_batch('images', $images);
@@ -389,7 +478,7 @@ class Admin extends CI_Controller
                     var_dump($this->db->display_error());
                     echo ('<br>');
                 } else {
-                    $data['css'] = 'tambah-sepatu.css';
+                    $data['css'] = ['tambah-sepatu.css'];
                     $data['ukuran'] = $this->db->get('ukuran')->result_array();
                     $this->session->set_flashdata('message', '<div class="alert-success">Data berhasil di tambahkan</div>');
                     $this->load->view('templates/header_admin', $data);

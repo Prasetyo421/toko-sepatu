@@ -251,13 +251,13 @@ class Sepatu_model extends CI_Model
     public function getDataShoesById($id)
     {
         $shoes_data = $this->db->get_where('shoes', ['id' => $id])->result_array()[0];
-        $this->db->select('size');
+        // $this->db->select('size');
         $shoes_data['sizes'] = $this->db->get_where('sizes', ['id_shoes' => $id])->result_array();
-        $this->db->select('spec');
+        // $this->db->select('spec');
         $shoes_data['specifications'] = $this->db->get_where('specifications', ['id_shoes' => $id])->result_array();
         $this->db->select('id, image_name');
         $shoes_data['images'] = $this->db->get_where('images', ['id_shoes' => $id])->result_array();
-        $this->db->select('thumb_name');
+        $this->db->select('id, thumb_name');
         $shoes_data['thumb'] = $this->db->get_where('thumb', ['id_shoes' => $id])->result_array();
 
 
