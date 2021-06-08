@@ -7,8 +7,12 @@ const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.top-nav ul');
 let amount = document.getElementById('amount');
 let size = document.getElementById('size');
+let body = document.getElementsByTagName('body')[0];
+let mainImage = document.getElementsByClassName('main-image')[0];
+let imageContent = document.getElementsByClassName('image-content')[0];
 
 function setSize(ele){
+    console.log(ele);
     let data = ele.dataset.size;
     size.value = data;
     console.log(data);
@@ -20,7 +24,6 @@ console.log(amountNow);
 function amountUp() {
     amountNow++;
     console.log('up');
-    // amount.innerHTML = `${amountNow}`;
     amount.value = amountNow;
 }
 
@@ -28,28 +31,41 @@ function amountDown() {
     if (amountNow > 1) {
         amountNow--;
         console.log('down');
-        // amount.innerHTML = `${amountNow}`;
         amount.value = amountNow;
     }
 }
 
 let heightMainImage = 0;
-if($('body').width() < 576){
-    heightMainImage = $('body').width();
-    $('.main-image').css('height', heightMainImage + 'px');
+if (body.offsetWidth < 576) {
+    heightMainImage = body.offsetWidth;
+    mainImage.style.height = heightMainImage + 'px';
 }else {
-    heightMainImage = $('.main-image').width();
-    $('.main-image').css('height', heightMainImage + 'px');
+    heightMainImage = mainImage.offsetWidth;
+    mainImage.style.height = heightMainImage + 'px';
 }
+
+// if($('body').width() < 576){
+//     heightMainImage = $('body').width();
+//     $('.main-image').css('height', heightMainImage + 'px');
+// }else {
+//     heightMainImage = $('.main-image').width();
+//     $('.main-image').css('height', heightMainImage + 'px');
+// }
 
 let loop = 1;
 let left;
-$('.thumb').click(function(){
-    left = -heightMainImage*parseInt($(this).data('image'));
+
+for (let i = 0; i < thumb.length; i++) {
+    thumb[i].addEventListener('click', thumbCLick);
+}
+
+function thumbCLick(){
+    console.log('click');
+    left = -heightMainImage*parseInt(this.dataset.image);
     console.log(left);
-    $('.image-content').css('left', left + 'px');
+    imageContent.style.left = left + 'px';
     loop++;
-})
+}
 
 menuToggle.addEventListener('click', function(){
     nav.classList.toggle('slide');

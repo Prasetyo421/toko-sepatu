@@ -24,7 +24,6 @@ class Home extends CI_Controller
         for ($i = 0; $i < count($tipe); $i++) {
             $data['data_sepatu'][$tipe[$i]] = $this->sepatu->getDataShoesByType($tipe[$i]);
         }
-
         $data['type'] = $tipe;
         $data['test'] = $this->sepatu->getDataShoesByType('ivan');
 
@@ -40,7 +39,6 @@ class Home extends CI_Controller
         $data['js'] = 'detail sepatu.js';
 
         $data['shoes'] = $this->sepatu->getDataShoesById($id);
-        // var_dump($data['shoes']);
         $data['shoes']['price'] = $this->formatHarga($data['shoes']['price']);
 
         $shoes_name = $data['shoes']['shoes_name'];

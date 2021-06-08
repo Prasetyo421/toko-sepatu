@@ -3,7 +3,9 @@
         <div class="image-product">
             <div class="thumb-image">
                 <?php for ($i = 0; $i < count($shoes['thumb']); $i++) : ?>
-                    <span></a><img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $shoes['thumb'][$i]['thumb_name']; ?>" alt="" data-image="<?= $i ?>" data-id="<?= $shoes['id']; ?>" class="thumb"></span>
+                    <span>
+                        <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $shoes['thumb'][$i]['thumb_name']; ?>" alt="" data-image="<?= $i ?>" data-id="<?= $shoes['id']; ?>" class="thumb">
+                    </span>
                 <?php endfor; ?>
             </div>
             <div class="main-image">

@@ -12,7 +12,7 @@
         <?php for ($i = 0; $i < count($type); $i++) : ?>
             <div class="type-sepatu">
 
-                <div class="pref" data-type="<?= $type[$i] ?>"><i class="fas fa-arrow-left"></i></div>
+                <div class="pref" onclick="pref(this)" data-type="<?= $type[$i] ?>"><i class="fas fa-arrow-left"></i></div>
 
                 <h3 class="type"><?= $type[$i] ?></h3>
 
@@ -32,7 +32,7 @@
                     </div>
                 </div>
 
-                <div class="next" data-type="<?= $type[$i] ?>"><i class="fas fa-arrow-right"></i></div>
+                <div class="next" onclick="next(this)" data-type="<?= $type[$i] ?>"><i class="fas fa-arrow-right"></i></div>
 
             </div>
         <?php endfor; ?>

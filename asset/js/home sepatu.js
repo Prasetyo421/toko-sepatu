@@ -9,51 +9,42 @@ const cancle = document.getElementsByClassName('cancle')[0];
 const responsiveNav = document.getElementsByClassName('responsive-nav')[0];
 
 var move = 0;
-var widthListSepatu = $('.list-sepatu').width();
-var width = $('.item').width();
-console.log(width);
 
-$('.pref').click(function(){
-   var type = $(this).data('type');
-   move = move + 200;
-   if( move <= 0){
-      $('.list-sepatu-' + type).css('left', move + 'px');
+function pref (ele) {
+   let type = ele.dataset.type;
+
+   move = move +200;
+   if (move <= 0) {
+      let listSepatu = document.getElementsByClassName('list-sepatu-' + type)[0];
+      listSepatu.style.left = move + 'px';
+      console.log(listSepatu.style.left);
    }else {
       move = 0;
    }
-})
+}
 
-$('.next').click(function(){
-   var type = $(this).data('type');
+function next (ele) {
+   let type = ele.dataset.type;
+   let listSepatu = document.getElementsByClassName('list-sepatu-' + type)[0];
+
    move = move + -200;
-   if ( (move + $('.list-sepatu-' + type).width()) > 0){
-      console.log($('.list-sepatu-' + type).width());
-      $('.list-sepatu-' + type).css('left', move + 'px');
+   if ((move + listSepatu.offsetWidth) > 0) {
+      console.log(move + listSepatu.offsetWidth);
+      listSepatu.style.left = move + 'px';
    }else {
-      move = -1 * ($('.list-sepatu-' + type).width() - 200);
+      move = -1 * (listSepatu.offsetWidth - 200);
    }
-})
+}
+
+let prefTest = document.getElementsByClassName('pref');
+
 
 menuToggle.addEventListener('click', function(){
    nav.classList.toggle('slide');
 });
 
 window.addEventListener("scroll", function(){
+   console.log('scroll');
    var topNav = document.getElementsByClassName("top-nav")[0];
    topNav.classList.toggle('sticky', window.scrollY > 0);
 });
-
-$('.bars').click(function(){
-   console.log('ok');
-   $(this).hide();
-   responsiveNav.style.display = 'block';
-   responsiveNav.style.display = 'block';
-   container.style.width = '100vh';
-   container.style.overflow = 'hidden';
-})
-
-$('.cancle').click(function(){
-   responsiveNav.style.display = 'none';
-   $('.bars').css('display', 'block');
-})
-
