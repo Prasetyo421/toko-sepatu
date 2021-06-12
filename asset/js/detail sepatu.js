@@ -6,13 +6,18 @@ let ajax = window.location.origin + '/toko-sepatu/asset/ajax/image.php';
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.top-nav ul');
 let amount = document.getElementById('amount');
-let size = document.getElementById('size');
+// let size = document.getElementById('size');
 let body = document.getElementsByTagName('body')[0];
 let mainImage = document.getElementsByClassName('main-image')[0];
 let imageContent = document.getElementsByClassName('image-content')[0];
+let size = document.getElementsByClassName('size');
 
 function setSize(ele){
     console.log(ele);
+    for (let i = 0; i < size.length; i++) {
+        const element = size[i].style.color = "#929292";
+    }
+    ele.style.color = "black";
     let data = ele.dataset.size;
     size.value = data;
     console.log(data);
@@ -56,10 +61,10 @@ let loop = 1;
 let left;
 
 for (let i = 0; i < thumb.length; i++) {
-    thumb[i].addEventListener('click', thumbCLick);
+    thumb[i].addEventListener('mouseover', thumbMouseover);
 }
 
-function thumbCLick(){
+function thumbMouseover(){
     console.log('click');
     left = -heightMainImage*parseInt(this.dataset.image);
     console.log(left);

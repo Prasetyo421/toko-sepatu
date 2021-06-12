@@ -101,6 +101,8 @@ body {
 .content .info-product .harga {
 	color: red;
 	margin-bottom: 1.5rem;
+	font-size: 2rem;
+	font-weight: bold;
 }
 
 .content .info-product p:nth-child(4) {
@@ -208,6 +210,14 @@ body {
 
 .content .related-product {
 	height: auto;
+	display: flex;
+}
+
+.content .related-product a {
+	display: inline-block;
+	border: 1px solid;
+	box-sizing: border-box;
+	width: 200px;
 }
 
 .content .related-product .list-sepatu {
@@ -230,6 +240,10 @@ body {
 
 .content .related-product .list-sepatu .item a:hover {
 	opacity: 1;
+}
+
+.bold {
+	color: black;
 }
 
 @media screen and (min-width: 1200px) {

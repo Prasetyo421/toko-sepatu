@@ -34,7 +34,7 @@
                 <div class="sizes">
                     <input type="hidden" name="size" id="size">
                     <?php foreach ($shoes['sizes'] as $size) : ?>
-                        <span onclick="setSize(this)" data-size="<?= $size['size'] ?>"><?= $size['size'] ?></span>
+                        <span onclick="setSize(this)" class="size" data-size="<?= $size['size'] ?>"><?= $size['size'] ?></span>
                     <?php endforeach; ?>
                 </div>
                 <div class="shop">
@@ -61,8 +61,9 @@
     <div class="related-product">
 
         <?php for ($i = 0; $i < count($related); $i++) : ?>
-            <a href="<?= base_url(); ?>home/detailSepatu/<?= $related[$i]['id'] ?>">
+            <a href="<?= base_url(); ?>home/detailSepatu/<?= $related[$i]['id'] ?>" class="related">
                 <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $related[$i]['thumb'][0]['thumb_name'] ?>" alt="<?= $related[$i]['thumb'][0]['thumb_name'] ?>">
+                <p><?= $related[$i]['shoes_name'] ?></p>
             </a>
         <?php endfor; ?>
     </div>
