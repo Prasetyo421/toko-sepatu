@@ -22,7 +22,7 @@
 
                         <?php foreach ($data_sepatu[$type[$i]] as $item) : ?>
                             <div class="item">
-                                <img src="<?= base_url(); ?>asset/image/sepatu/<?= $item['images'][0]['image_name']; ?>" alt="">
+                                <img src="<?= base_url(); ?>asset/image/sepatu/<?= $item['images'][0]['image_name']; ?>" alt="<?= $item['shoes_name'] ?>">
                                 <p><?= $item['shoes_name'] ?></p>
                                 <a href="<?= base_url(); ?>home/detailSepatu/<?= $item['id']; ?>"></a>
                             </div>

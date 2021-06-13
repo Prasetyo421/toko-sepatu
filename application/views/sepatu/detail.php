@@ -4,14 +4,14 @@
             <div class="thumb-image">
                 <?php for ($i = 0; $i < count($shoes['thumb']); $i++) : ?>
                     <span>
-                        <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $shoes['thumb'][$i]['thumb_name']; ?>" alt="" data-image="<?= $i ?>" data-id="<?= $shoes['id']; ?>" class="thumb">
+                        <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $shoes['thumb'][$i]['thumb_name']; ?>" data-image="<?= $i ?>" data-id="<?= $shoes['id']; ?>" class="thumb" alt="<?= $shoes['shoes_name'] ?>">
                     </span>
                 <?php endfor; ?>
             </div>
             <div class="main-image">
                 <div class="image-content">
                     <?php for ($i = 0; $i < count($shoes['images']); $i++) : ?>
-                        <img src="<?= base_url(); ?>asset/image/sepatu/<?= $shoes['images'][$i]['image_name']; ?>" alt="">
+                        <img src="<?= base_url(); ?>asset/image/sepatu/<?= $shoes['images'][$i]['image_name']; ?>" alt="<?= $shoes['shoes_name'] ?>">
                     <?php endfor; ?>
                 </div>
             </div>
