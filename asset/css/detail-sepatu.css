@@ -9,7 +9,6 @@ body {
 .container .top-nav {
 	position: relative;
 	background-color: black;
-	z-index: 3;
 }
 
 .content {

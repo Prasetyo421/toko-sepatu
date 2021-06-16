@@ -1,5 +1,18 @@
 <?php
 
+function formatHarga($str = '')
+{
+    $insert = '.';
+    $i = 1;
+    while (($pos = strlen($str) - (3 * $i + ($i - 1))) > 0) {
+        $str = substr($str, 0, $pos) . $insert . substr($str, $pos);
+
+        $i++;
+    }
+
+    return $str;
+}
+
 function is_logged_in()
 {
     $ci = get_instance();

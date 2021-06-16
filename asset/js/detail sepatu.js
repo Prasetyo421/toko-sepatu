@@ -1,16 +1,14 @@
 console.log('ok');
 
-let thumb = document.getElementsByClassName('thumb');
-let image = document.getElementsByClassName('main-image')[0];
-let ajax = window.location.origin + '/toko-sepatu/asset/ajax/image.php';
-const menuToggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.top-nav ul');
-let amount = document.getElementById('amount');
-// let size = document.getElementById('size');
-let body = document.getElementsByTagName('body')[0];
-let mainImage = document.getElementsByClassName('main-image')[0];
-let imageContent = document.getElementsByClassName('image-content')[0];
-let size = document.getElementsByClassName('size');
+const thumb = document.getElementsByClassName('thumb');
+const image = document.getElementsByClassName('main-image')[0];
+const ajax = window.location.origin + '/toko-sepatu/asset/ajax/image.php';
+const amount = document.getElementById('amount');
+const body = document.getElementsByTagName('body')[0];
+const mainImage = document.getElementsByClassName('main-image')[0];
+const imageContent = document.getElementsByClassName('image-content')[0];
+const size = document.getElementsByClassName('size');
+const inputSize = document.getElementById('size');
 
 function setSize(ele){
     console.log(ele);
@@ -19,7 +17,7 @@ function setSize(ele){
     }
     ele.style.color = "black";
     let data = ele.dataset.size;
-    size.value = data;
+    inputSize.value = data;
     console.log(data);
 }
 
@@ -71,7 +69,3 @@ function thumbMouseover(){
     imageContent.style.left = left + 'px';
     loop++;
 }
-
-menuToggle.addEventListener('click', function(){
-    nav.classList.toggle('slide');
- });

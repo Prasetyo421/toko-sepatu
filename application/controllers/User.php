@@ -23,34 +23,93 @@ class User extends CI_Controller
         $data['css'] = 'chart.css';
         $data['js'] = 'chart.js';
         $id_shoes = htmlspecialchars($this->input->post('id'), true);
+        $data['shoes'] = $this->sepatu->getDataShoesById($id_shoes);
 
-        $this->form_validation->set_rules('kota-asal', 'kota-asal', 'required|trim');
-        $this->form_validation->set_rules('kota-tujuan', 'kota-tujuan', 'required|trim');
         $this->form_validation->set_rules('amount', 'amount', 'required|trim');
         $this->form_validation->set_rules('size', 'size', 'required|trim');
 
-        if (!$this->form_validation->run()) {
-            $data['shoes'] = $this->sepatu->getDataShoesById($id_shoes);
-            // var_dump($data['shoes']);
-            // die;
-            echo "false";
-            $data['citys'] = json_decode(file_get_contents(base_url() . 'asset/json/citys.json'), true);
-            $data['amount'] = htmlspecialchars($this->input->post('amount'), true);
-            $data['size'] = htmlspecialchars($this->input->post('size'), true);
-            $this->load->view('user/chart', $data);
-        } else {
+        $amount = htmlspecialchars($this->input->post('amount'), true);
+        $variant = htmlspecialchars($this->input->post('size'), true);
 
+        if (!$this->form_validation->run()) {
+            echo 'form_validation1 gagal';
+            redirect('home/detailSepatu/' . $id_shoes);
+        } else {
+            // echo 'form_validation2 gagal';
+            $userEmail = $this->session->userdata('email');
+            $userData = $this->db->get_where('users', ['email' => $userEmail])->result_array()[0];
+
+            $id_chart = $userData['id'];
+            $dataForChart = [
+                'id_chart' => $id_chart,
+                'id_product' => $id_shoes,
+                'amount' => $amount,
+                'variant' => $variant,
+            ];
+
+            $this->sepatu->insertDataChart($dataForChart);
+            $products_in_chart = $this->sepatu->getDataChart($id_chart);
+            $data['products'] = $products_in_chart;
+
+            $this->load->view('templates/sepatu_header', $data);
+            $this->load->view('user/chart', $data);
+            $this->load->view('templates/sepatu_footer');
+        }
+    }
+
+    public function cekOngkir()
+    {
+
+        $id_shoes = htmlspecialchars($this->input->post('id'), true);
+        $data['shoes'] = $this->sepatu->getDataShoesById($id_shoes);
+
+
+        $this->form_validation->set_rules('amount', 'amount', 'required|trim');
+        $this->form_validation->set_rules('size', 'size', 'required|trim');
+
+        $amount = htmlspecialchars($this->input->post('amount'), true);
+        $variant = htmlspecialchars($this->input->post('size'), true);
+
+
+        $this->form_validation->set_rules('id-kota-asal', 'id-kota-asal', 'required|trim');
+        $this->form_validation->set_rules('id-kota-tujuan', 'id-kota-tujuan', 'required|trim');
+        $this->form_validation->set_rules('kota-asal', 'kota-asal', 'required|trim');
+        $this->form_validation->set_rules('kota-tujuan', 'kota-tujuan', 'required|trim');
+
+        if (!$this->form_validation->run()) {
+            // echo 'form_validation2 gagal';
+            $userEmail = $this->session->userdata('email');
+            $userData = $this->db->get_where('users', ['email' => $userEmail])->result_array()[0];
+
+            $id_chart = $userData['id'];
+            $dataForChart = [
+                'id_chart' => $id_chart,
+                'id_product' => $id_shoes,
+                'amount' => $amount,
+                'variant' => $variant,
+            ];
+
+            $this->sepatu->insertDataChart($dataForChart);
+
+            $products_in_chart = $this->sepatu->getDataChart($id_chart);
+
+            $data['products'] = $products_in_chart;
+
+            $this->load->view('templates/sepatu_header', $data);
+            $this->load->view('user/chart', $data);
+            $this->load->view('templates/sepatu_footer');
+        } else {
             echo "ok";
             $data['citys'] = json_decode(file_get_contents(base_url() . 'asset/json/citys.json'), true);
+
+            $data['citys'] = json_decode(file_get_contents(base_url() . 'asset/json/citys.json'), true);
+            $data['amount'] = $amount;
+            $data['size'] = $variant;
 
             $origin = htmlspecialchars($this->input->post('id-kota-asal'), true);
             $destination = htmlspecialchars($this->input->post('id-kota-tujuan'), true);
             $kotaAsal = htmlspecialchars($this->input->post('kota-asal'), true);
             $kotaTujuan = htmlspecialchars($this->input->post('kota-tujuan'), true);
-            var_dump("ori" . $origin);
-            echo "<br>";
-            var_dump("des " . $destination);
-            echo "<br>";
 
             $weight = 1000;
             $couries = ['jne', 'tiki', 'pos'];

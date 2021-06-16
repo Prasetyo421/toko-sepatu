@@ -208,8 +208,6 @@ class Auth extends CI_Controller
         $email = $this->input->get('email');
         $token = $this->input->get('token');
 
-        // var_dump($token);
-        // die;
         $user = $this->db->get_where('users', ['email' => $email])->row_array();
         if (!$user) {
             $this->session->set_flashdata('message', '<div class="alert-danger">Email salah</div>');

@@ -9,19 +9,6 @@ class Sepatu_model extends CI_Model
         return $this->db->get('sepatu')->result_array();
     }
 
-    public function insertDataSepatu()
-    {
-        $data = [
-            "nama" => htmlspecialchars($this->input->post('name', true)),
-            "ukuran" => htmlspecialchars($this->input->post('ukuran', true)),
-            "harga" => htmlspecialchars($this->input->post('harga', true)),
-            "deskripsi" => htmlspecialchars($this->input->post('deskripsi', true)),
-
-        ];
-
-        $this->db->insert('sepatu', $data);
-    }
-
     private function getDataShoesBySize($size)
     {
         $this->db->like('shoes_name', $size);
@@ -161,13 +148,6 @@ class Sepatu_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-
-    public function insertSepatu($data)
-    {
-        $this->db->insert('sepatu', $data);
-        return $this->db->affected_rows();
-    }
-
     public function updateDataSepatu($data, $id)
     {
         $this->db->update('sepatu', $data, ['id' => $id]);
@@ -262,5 +242,25 @@ class Sepatu_model extends CI_Model
 
 
         return $shoes_data;
+    }
+
+    public function insertDataChart($data)
+    {
+        $result = $this->db->insert('detail_chart', $data);
+        return $result;
+    }
+
+    public function getDataChart($id_chart)
+    {
+        $query = "SELECT * FROM detail_chart JOIN shoes ON (detail_chart.id_product = shoes.id) WHERE detail_chart.id_chart = " . $id_chart;
+        $result = $this->db->query($query)->result_array();
+        for ($i = 0; $i < count($result); $i++) {
+            $id_product = $result[$i]['id_product'];
+            $images = $this->db->get_where('images', ['id_shoes' => $id_product])->result_array();
+            $thumb = $this->db->get_where('thumb', ['id_shoes' => $id_product])->result_array();
+            $result[$i]['images'] = $images;
+            $result[$i]['thumb'] = $thumb;
+        }
+        return $result;
     }
 }

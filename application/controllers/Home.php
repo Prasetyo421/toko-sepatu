@@ -32,33 +32,35 @@ class Home extends CI_Controller
         $this->load->view('templates/sepatu_footer', $data);
     }
 
-    public function detailSepatu($id)
+    public function detailSepatu($id = null)
     {
-        $data['judul'] = 'Halaman Detail Sepatu';
-        $data['css'] = 'detail-sepatu.css';
-        $data['js'] = 'detail sepatu.js';
+        if ($id == null) {
+            redirect('home');
+        } else {
+            $data['judul'] = 'Halaman Detail Sepatu';
+            $data['css'] = 'detail-sepatu.css';
+            $data['js'] = 'detail sepatu.js';
 
-        $data['shoes'] = $this->sepatu->getDataShoesById($id);
-        $data['shoes']['price'] = $this->formatHarga($data['shoes']['price']);
+            $data['shoes'] = $this->sepatu->getDataShoesById($id);
+            $data['shoes']['price'] = formatHarga($data['shoes']['price']);
 
-        $shoes_name = $data['shoes']['shoes_name'];
-        $data['related'] = $this->sepatu->getRelatedSepatu($shoes_name);
+            $shoes_name = $data['shoes']['shoes_name'];
+            $data['related'] = $this->sepatu->getRelatedSepatu($shoes_name);
 
-        $this->load->view('templates/sepatu_header', $data);
-        $this->load->view('sepatu/detail', $data);
-        $this->load->view('templates/sepatu_footer', $data);
+            $this->load->view('templates/sepatu_header', $data);
+            $this->load->view('sepatu/detail', $data);
+            $this->load->view('templates/sepatu_footer', $data);
+        }
     }
 
-    private function formatHarga($str = '')
+    public function chart()
     {
-        $insert = '.';
-        $i = 1;
-        while (($pos = strlen($str) - (3 * $i + ($i - 1))) > 0) {
-            $str = substr($str, 0, $pos) . $insert . substr($str, $pos);
+        $data['judul'] = 'Daftar Barang Keranjang';
+        $data['css'] = 'chart.css';
+        // $data['js'] = 'chart.js';
 
-            $i++;
-        }
-
-        return $str;
+        $this->load->view('templates/sepatu_header');
+        $this->load->view('sepatu/chart');
+        $this->load->view('templates/sepatu_footer');
     }
 }
