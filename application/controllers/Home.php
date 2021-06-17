@@ -14,6 +14,7 @@ class Home extends CI_Controller
         $data['judul'] = 'Halaman Home';
         $data['css'] = 'home-sepatu.css';
         $data['js'] = 'home sepatu.js';
+        $data['isLogin'] = is_logged_in();
 
         $this->db->select('type');
         $tipe = $this->db->get('type_sepatu')->result_array();
@@ -34,6 +35,8 @@ class Home extends CI_Controller
 
     public function detailSepatu($id = null)
     {
+        $data['isLogin'] = is_logged_in();
+
         if ($id == null) {
             redirect('home');
         } else {
@@ -51,16 +54,5 @@ class Home extends CI_Controller
             $this->load->view('sepatu/detail', $data);
             $this->load->view('templates/sepatu_footer', $data);
         }
-    }
-
-    public function chart()
-    {
-        $data['judul'] = 'Daftar Barang Keranjang';
-        $data['css'] = 'chart.css';
-        // $data['js'] = 'chart.js';
-
-        $this->load->view('templates/sepatu_header');
-        $this->load->view('sepatu/chart');
-        $this->load->view('templates/sepatu_footer');
     }
 }

@@ -18,7 +18,12 @@ function is_logged_in()
     $ci = get_instance();
     $email = $ci->session->userdata('email');
     if (!$email) {
-        redirect('auth');
+        $menu = $ci->uri->segment(1);
+        if (isset($menu)) {
+            if ($menu != 'home') {
+                redirect('auth');
+            }
+        }
     } else {
         $user = $ci->db->get_where('users', ['email' => $email]);
         if ($user->num_rows() < 1) {
@@ -31,6 +36,7 @@ function is_logged_in()
             if ($roleId == 2 && $menu == 'admin') {
                 redirect('auth/blocked');
             }
+            return true;
         }
     }
 }

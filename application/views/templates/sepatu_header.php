@@ -28,9 +28,11 @@
                 <li><a class="link" href="#about">About</a></li>
                 <li><a class="link" href="#contact-us">Contact us</a></li>
             </ul>
-
-            <a class="login" href="<?= base_url(); ?>auth">Login</a>
-
+            <?php if ($isLogin) : ?>
+                <a class="login logout" href="<?= base_url(); ?>auth/logout">Logout</a>
+            <?php else : ?>
+                <a class="login" href="<?= base_url(); ?>auth">Login</a>
+            <?php endif; ?>
             <div class="menu-toggle">
                 <input type="checkbox">
                 <span></span>
