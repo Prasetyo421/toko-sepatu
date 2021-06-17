@@ -5,14 +5,30 @@
                 <div class="row detail-sepatu ">
                     <input type="checkbox" name="select-item" data-price="<?= $product['price'] ?>" data-amount="<?= $product['amount'] ?>" onclick="selectItem(this)">
                     <div class="gambar">
-                        <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $product['thumb'][0]['thumb_name'] ?>" alt="gambar sepatu">
+                        <a href="<?= base_url(); ?>home/detailSepatu/<?= $product['id_product']; ?>">
+                            <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $product['thumb'][0]['thumb_name'] ?>" alt="gambar sepatu">
+                        </a>
                     </div>
                     <div class="info">
-                        <p><?= $product['shoes_name'] ?></p>
-                        <p><?= $product['variant'] ?></p>
-                        <p><?= $product['price'] ?></p>
-                        <p><?= $product['amount'] ?></p>
-                        <a href="<?= base_url() ?>user/hapusProductChart/<?= $product['id_chart'] ?>/<?= $product['id_product'] ?>" onclick="return confirm('yakin?')">hapus</a>
+                        <a class="shoes-name" href="<?= base_url(); ?>home/detailSepatu/<?= $product['id_product']; ?>"><?= $product['shoes_name'] ?></a>
+                        <select name="variant" id="variant">
+                            <?php for ($i = 0; $i < count($product['sizes']); $i++) : ?>
+                                <?php if ($product['sizes'][$i]['size']  == $product['variant']) : ?>
+                                    <option selected value="<?= $product['sizes'][$i]['size'] ?>"><?= $product['sizes'][$i]['size'] ?></option>
+                                <?php else : ?>
+                                    <option value="<?= $product['sizes'][$i]['size'] ?>"><?= $product['sizes'][$i]['size'] ?></option>
+                                <?php endif; ?>
+                            <?php endfor; ?>
+                        </select>
+                        <p class="price"><?= $product['price'] ?></p>
+                        <div class="amount">
+                            <input type="hidden" name="amount" value="<?= $product['amount'] ?>">
+                            <i class="fas fa-arrow-left"></i>
+                            <p><?= $product['amount'] ?></p>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+
+                        <a class="delete-produt" href="<?= base_url() ?>user/hapusProductChart/<?= $product['id_chart'] ?>/<?= $product['id_product'] ?>" onclick="return confirm('yakin?')">hapus</a>
                     </div>
                 </div>
             <?php endforeach; ?>

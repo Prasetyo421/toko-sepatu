@@ -12,6 +12,7 @@ class User extends CI_Controller
     }
     public function index()
     {
+        $data['isLogin'] = is_logged_in();
         $user = $this->db->get_where('users', ['email' => $this->session->userdata['email']])->row_array();
 
         $data['name'] = $user['name'];
@@ -20,12 +21,12 @@ class User extends CI_Controller
 
     public function chart()
     {
+        $data['isLogin'] = is_logged_in();
         $data['css'] = 'chart.css';
         $data['js'] = 'chart.js';
         $userEmail = $this->session->userdata('email');
         $userData = $this->db->get_where('users', ['email' => $userEmail])->result_array()[0];
         $id_chart = $userData['id'];
-
 
         $this->form_validation->set_rules('amount', 'amount', 'required|trim');
         $this->form_validation->set_rules('size', 'size', 'required|trim');
@@ -34,7 +35,6 @@ class User extends CI_Controller
         $variant = htmlspecialchars($this->input->post('size'), true);
 
         if (!$this->form_validation->run()) {
-            // echo 'form_validation1 gagal';
             $products_in_chart = $this->sepatu->getDataChart($id_chart);
             $data['products'] = $products_in_chart;
 
@@ -42,7 +42,6 @@ class User extends CI_Controller
             $this->load->view('user/chart', $data);
             $this->load->view('templates/sepatu_footer');
         } else {
-            // echo 'form_validation2 gagal';
             $id_shoes = htmlspecialchars($this->input->post('id'), true);
             $data['shoes'] = $this->sepatu->getDataShoesById($id_shoes);
 
@@ -53,7 +52,31 @@ class User extends CI_Controller
                 'variant' => $variant,
             ];
 
-            $this->sepatu->insertDataChart($dataForChart);
+            $cekData = [
+                'id_chart' => $id_chart,
+                'id_product' => $id_shoes,
+                'variant' => $variant,
+            ];
+
+            $cekProductInChart = $this->sepatu->cekProductInChart($cekData);
+            if ($cekProductInChart == false) {
+                $this->sepatu->insertDataChart($dataForChart);
+            } else {
+                $amountOld = $cekProductInChart['amount'];
+                $amount = (int)$amount + (int)$amountOld;
+                $dataUpdateChart = [
+                    'amount' => $amount
+                ];
+
+                $kondisi = [
+                    'id_chart' => $id_chart,
+                    'id_product' => $id_shoes,
+                    'variant' => $variant
+                ];
+
+                $this->sepatu->updateChart($kondisi, $dataUpdateChart);
+            }
+
             $products_in_chart = $this->sepatu->getDataChart($id_chart);
             $data['products'] = $products_in_chart;
 

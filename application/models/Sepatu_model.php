@@ -258,6 +258,7 @@ class Sepatu_model extends CI_Model
             $id_product = $result[$i]['id_product'];
             $images = $this->db->get_where('images', ['id_shoes' => $id_product])->result_array();
             $thumb = $this->db->get_where('thumb', ['id_shoes' => $id_product])->result_array();
+            $result[$i]['sizes'] = $this->db->get_where('sizes', ['id_shoes' => $id_product])->result_array();
             $result[$i]['images'] = $images;
             $result[$i]['thumb'] = $thumb;
         }
@@ -267,5 +268,20 @@ class Sepatu_model extends CI_Model
     public function deleteDataChart($id_chart, $id_product)
     {
         $result = $this->db->delete('detail_chart', ['id_chart' => $id_chart, 'id_product' => $id_product]);
+    }
+
+    public function cekProductInChart($kondisi)
+    {
+        $product = $this->db->get_where('detail_chart', $kondisi);
+        if ($product->num_rows() < 1) {
+            return false;
+        } else {
+            return $product->result_array()[0];
+        }
+    }
+
+    public function updateChart($kondisi, $data)
+    {
+        $this->db->update('detail_chart', $data, $kondisi);
     }
 }

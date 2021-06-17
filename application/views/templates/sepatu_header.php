@@ -27,11 +27,14 @@
                 <li><a class="link" href="#size-chart">Size chart</a></li>
                 <li><a class="link" href="#about">About</a></li>
                 <li><a class="link" href="#contact-us">Contact us</a></li>
+                <?php if ($isLogin) : ?>
+                    <li><a class="login logout" href="<?= base_url(); ?>auth/logout">Logout</a></li>
+                <?php else : ?>
+                    <li><a class="login" href="<?= base_url(); ?>auth">Login</a></li>
+                <?php endif; ?>
             </ul>
             <?php if ($isLogin) : ?>
-                <a class="login logout" href="<?= base_url(); ?>auth/logout">Logout</a>
-            <?php else : ?>
-                <a class="login" href="<?= base_url(); ?>auth">Login</a>
+                <a class="login logout" href="<?= base_url(); ?>user/chart">Chart</a>
             <?php endif; ?>
             <div class="menu-toggle">
                 <input type="checkbox">
