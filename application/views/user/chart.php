@@ -2,7 +2,7 @@
     <div class="chart">
         <form action="<?= base_url() ?>user/cekOngkir" method="post">
             <?php foreach ($products as $product) : ?>
-                <div class="row detail-sepatu">
+                <div class="row detail-sepatu ">
                     <input type="checkbox" name="select-item" data-price="<?= $product['price'] ?>" data-amount="<?= $product['amount'] ?>" onclick="selectItem(this)">
                     <div class="gambar">
                         <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $product['thumb'][0]['thumb_name'] ?>" alt="gambar sepatu">
@@ -12,6 +12,7 @@
                         <p><?= $product['variant'] ?></p>
                         <p><?= $product['price'] ?></p>
                         <p><?= $product['amount'] ?></p>
+                        <a href="<?= base_url() ?>user/hapusProductChart/<?= $product['id_chart'] ?>/<?= $product['id_product'] ?>" onclick="return confirm('yakin?')">hapus</a>
                     </div>
                 </div>
             <?php endforeach; ?>

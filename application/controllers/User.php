@@ -22,8 +22,10 @@ class User extends CI_Controller
     {
         $data['css'] = 'chart.css';
         $data['js'] = 'chart.js';
-        $id_shoes = htmlspecialchars($this->input->post('id'), true);
-        $data['shoes'] = $this->sepatu->getDataShoesById($id_shoes);
+        $userEmail = $this->session->userdata('email');
+        $userData = $this->db->get_where('users', ['email' => $userEmail])->result_array()[0];
+        $id_chart = $userData['id'];
+
 
         $this->form_validation->set_rules('amount', 'amount', 'required|trim');
         $this->form_validation->set_rules('size', 'size', 'required|trim');
@@ -32,14 +34,18 @@ class User extends CI_Controller
         $variant = htmlspecialchars($this->input->post('size'), true);
 
         if (!$this->form_validation->run()) {
-            echo 'form_validation1 gagal';
-            redirect('home/detailSepatu/' . $id_shoes);
+            // echo 'form_validation1 gagal';
+            $products_in_chart = $this->sepatu->getDataChart($id_chart);
+            $data['products'] = $products_in_chart;
+
+            $this->load->view('templates/sepatu_header', $data);
+            $this->load->view('user/chart', $data);
+            $this->load->view('templates/sepatu_footer');
         } else {
             // echo 'form_validation2 gagal';
-            $userEmail = $this->session->userdata('email');
-            $userData = $this->db->get_where('users', ['email' => $userEmail])->result_array()[0];
+            $id_shoes = htmlspecialchars($this->input->post('id'), true);
+            $data['shoes'] = $this->sepatu->getDataShoesById($id_shoes);
 
-            $id_chart = $userData['id'];
             $dataForChart = [
                 'id_chart' => $id_chart,
                 'id_product' => $id_shoes,
@@ -55,6 +61,12 @@ class User extends CI_Controller
             $this->load->view('user/chart', $data);
             $this->load->view('templates/sepatu_footer');
         }
+    }
+
+    public function hapusProductChart($id_chart, $id_product)
+    {
+        $this->sepatu->deleteDataChart($id_chart, $id_product);
+        redirect('user/chart');
     }
 
     public function cekOngkir()

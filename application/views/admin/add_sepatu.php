@@ -23,7 +23,8 @@
                 </div>
                 <div class="form-grup">
                     <label for="deskripsi">Deskripsi Produk</label>
-                    <input type="text" name="deskripsi" id="deskripsi" value="<?= set_value('deskripsi'); ?>">
+                    <!-- <input type="text" name="deskripsi" id="deskripsi" value="<?= set_value('deskripsi'); ?>"> -->
+                    <textarea name="deskripsi" id="deskripsi" cols="30" rows="10"><?= set_value('deskripsi'); ?> </textarea>
                     <?= form_error('deskripsi', '<small class="color-red">', '</small>'); ?>
                 </div>
                 <div class="form-grup">

@@ -263,4 +263,9 @@ class Sepatu_model extends CI_Model
         }
         return $result;
     }
+
+    public function deleteDataChart($id_chart, $id_product)
+    {
+        $result = $this->db->delete('detail_chart', ['id_chart' => $id_chart, 'id_product' => $id_product]);
+    }
 }

@@ -207,7 +207,7 @@ class Admin extends CI_Controller
                 // Update SIZES
                 $ukuran = $this->input->post('size');
 
-                var_dump($data);
+                // var_dump($data);
                 for ($i = 0; $i < count($data['shoes']['sizes']); $i++) {
                     if (!$this->db->delete('sizes', ['id' => $data['shoes']['sizes'][$i]['id']])) {
                         var_dump($this->db->display_error());
@@ -377,7 +377,7 @@ class Admin extends CI_Controller
                     $this->upload->initialize($config);
 
                     if (!$this->upload->do_upload('file')) {
-                        // var_dump($this->upload->display_errors());
+                        var_dump($this->upload->display_errors());
                         // die;
                     } else {
                         $dataUpload = $this->upload->data();
@@ -408,13 +408,13 @@ class Admin extends CI_Controller
                 $ukuran = $this->input->post('size');
                 $spesifikasi = $this->input->post('spesifikasi');
 
-                var_dump($ukuran);
-                echo '<br>';
-                var_dump($spesifikasi);
-                echo '<br>';
-                var_dump($gambar['image']);
-                echo '<br>';
-                var_dump($gambar['thumb']);
+                // var_dump($ukuran);
+                // echo '<br>';
+                // var_dump($spesifikasi);
+                // echo '<br>';
+                // var_dump($gambar['image']);
+                // echo '<br>';
+                // var_dump($gambar['thumb']);
                 // die;
 
                 $shoes_name = htmlspecialchars($this->input->post('name-sepatu'), true);
