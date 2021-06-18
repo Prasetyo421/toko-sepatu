@@ -3,7 +3,7 @@
         <form action="<?= base_url() ?>user/cekOngkir" method="post">
             <?php foreach ($products as $product) : ?>
                 <div class="row detail-sepatu ">
-                    <input type="checkbox" name="select-item" data-price="<?= $product['price'] ?>" data-amount="<?= $product['amount'] ?>" onclick="selectItem(this)">
+                    <input type="checkbox" name="select-item" class="check-product" data-price="<?= $product['price'] ?>" data-amount="<?= $product['amount'] ?>" onclick="selectItem(this)">
                     <div class="gambar">
                         <a href="<?= base_url(); ?>home/detailSepatu/<?= $product['id_product']; ?>">
                             <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $product['thumb'][0]['thumb_name'] ?>" alt="gambar sepatu">
