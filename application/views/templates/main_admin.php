@@ -10,7 +10,7 @@
         </tr>
         <?php for ($i = 0; $i < count($shoes); $i++) : ?>
             <?php if ($i % 2 == 1) : ?>
-                <tr style="background-color: antiquewhite;">
+                <tr style="background-color: #fff;">
                     <td><?= $i + 1 ?></td>
                     <td><?= $shoes[$i]['shoes_name']; ?></td>
                     <td class="aksi">
@@ -20,7 +20,7 @@
                     </td>
                 </tr>
             <?php else : ?>
-                <tr style="background-color: #fff;">
+                <tr style="background-color: antiquewhite;">
                     <td><?= $i + 1 ?></td>
                     <td><?= $shoes[$i]['shoes_name']; ?></td>
                     <td class="aksi">
