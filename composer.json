@@ -1,4 +1,5 @@
 {
+	"phpunit/phpunit": "~7.0",
 	"description": "The CodeIgniter framework",
 	"name": "codeigniter/framework",
 	"type": "project",
@@ -12,7 +13,8 @@
 	},
 	"require": {
 		"php": ">=5.3.7",
-		"google/apiclient": "2.0"
+		"google/apiclient": "2.0",
+		"chriskacerguis/codeigniter-restserver": "^3.1"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

@@ -408,15 +408,6 @@ class Admin extends CI_Controller
                 $ukuran = $this->input->post('size');
                 $spesifikasi = $this->input->post('spesifikasi');
 
-                // var_dump($ukuran);
-                // echo '<br>';
-                // var_dump($spesifikasi);
-                // echo '<br>';
-                // var_dump($gambar['image']);
-                // echo '<br>';
-                // var_dump($gambar['thumb']);
-                // die;
-
                 $shoes_name = htmlspecialchars($this->input->post('name-sepatu'), true);
                 $shoes_data = [
                     'shoes_name' => $shoes_name,
@@ -530,16 +521,6 @@ class Admin extends CI_Controller
             $fileName = explode('.', $fileName);
             $fileName = $fileName[0] . '_thumb.' . end($fileName);
             return $fileName;
-        }
-    }
-
-    private function checkDataExist($table, $column, $key)
-    {
-        $query = $this->db->get_where($table, [$column => $key]);
-        if ($query->num_rows() > 0) {
-            return true;
-        } else {
-            return false;
         }
     }
 }

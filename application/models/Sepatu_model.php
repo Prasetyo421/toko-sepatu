@@ -132,9 +132,9 @@ class Sepatu_model extends CI_Model
     public function getDataSepatu($id = null)
     {
         if ($id === null) {
-            return $this->db->get('sepatu')->result_array();
+            return $this->getAllDataSepatu();
         } else {
-            return $this->db->get_where('sepatu', ['id' => $id])->result_array();
+            return $this->getDataShoesById($id);
         }
     }
 
@@ -150,7 +150,6 @@ class Sepatu_model extends CI_Model
 
     public function updateDataSepatu($data, $id)
     {
-        $this->db->update('sepatu', $data, ['id' => $id]);
         return $this->db->affected_rows();
     }
 
@@ -228,6 +227,20 @@ class Sepatu_model extends CI_Model
         return $shoes_data;
     }
 
+    public function getAllDataShoes()
+    {
+        $shoes_data = $this->db->get('shoes')->result_array();
+        for ($i = 0; $i < count($shoes_data); $i++) {
+            $id_shoes = $shoes_data[$i]['id'];
+            $shoes_data[$i]['sizes'] = $this->db->get_where('sizes', ['id_shoes' => $id_shoes])->result_array();
+            $shoes_data[$i]['specifications'] = $this->db->get_where('specifications', $id_shoes)->result_array();
+            $shoes_data[$i]['images'] = $this->db->get_where('images', ['id_shoes' => $id_shoes])->result_array();
+            $shoes_data[$i]['thumb'] = $this->db->get_where('thumb', ['id_shoes' => $id_shoes])->result_array();
+        }
+
+        return $shoes_data;
+    }
+
     public function getDataShoesById($id)
     {
         $shoes_data = $this->db->get_where('shoes', ['id' => $id])->result_array()[0];
@@ -239,7 +252,6 @@ class Sepatu_model extends CI_Model
         $shoes_data['images'] = $this->db->get_where('images', ['id_shoes' => $id])->result_array();
         $this->db->select('id, thumb_name');
         $shoes_data['thumb'] = $this->db->get_where('thumb', ['id_shoes' => $id])->result_array();
-
 
         return $shoes_data;
     }
