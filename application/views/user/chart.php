@@ -23,9 +23,9 @@
                         <p class="price"><?= $product['price'] ?></p>
                         <div class="amount">
                             <input type="hidden" name="amount" value="<?= $product['amount'] ?>">
-                            <i class="fas fa-arrow-left"></i>
-                            <p><?= $product['amount'] ?></p>
-                            <i class="fas fa-arrow-right"></i>
+                            <i class="fas fa-arrow-left" onclick="setAmount(this)" data-id-product="<?= $product['id_product'] ?>" data-operation="minus"></i>
+                            <p id="<?= $product['id_product'] ?>"><?= $product['amount'] ?></p>
+                            <i class="fas fa-arrow-right" onclick="setAmount(this)" data-id-product="<?= $product['id_product'] ?>" data-operation="plus"></i>
                         </div>
 
                         <a class="delete-produt" href="<?= base_url() ?>user/hapusProductChart/<?= $product['id_chart'] ?>/<?= $product['id_product'] ?>" onclick="return confirm('yakin?')">hapus</a>

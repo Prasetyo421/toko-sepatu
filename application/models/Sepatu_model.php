@@ -292,8 +292,30 @@ class Sepatu_model extends CI_Model
         }
     }
 
-    public function updateChart($kondisi, $data)
+    public function updateAmountProductInChart()
     {
-        $this->db->update('detail_chart', $data, $kondisi);
+        $email = $this->session->userdata['email'];
+        $operation = $this->input->post('operation', true);
+        $id_product = $this->input->post('idProduct', true);
+        $id_chart = $this->db->get_where('users', ['email' => $email])->result_array()[0]['id'];
+        $kondisi = [
+            'id_chart' => $id_chart,
+            'id_product' => $id_product
+        ];
+        $this->db->select('amount');
+        if ($operation == 'plus') {
+            $amount = (int)$this->db->get_where('detail_chart', $kondisi)->result_array()[0]['amount'] + 1;
+        } else if ($operation == 'minus') {
+            $amount = (int)$this->db->get_where('detail_chart', $kondisi)->result_array()[0]['amount'] - 1;
+        }
+
+        $data = [
+            'amount' => $amount
+        ];
+        if ($this->db->update('detail_chart', $data, $kondisi)) {
+            return $amount;
+        } else {
+            $this->db->display_error();
+        }
     }
 }
