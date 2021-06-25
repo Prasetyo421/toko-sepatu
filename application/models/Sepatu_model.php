@@ -294,9 +294,9 @@ class Sepatu_model extends CI_Model
 
     public function updateAmountProductInChart()
     {
-        $email = $this->session->userdata['email'];
-        $operation = $this->input->post('operation', true);
-        $id_product = $this->input->post('idProduct', true);
+        $email = htmlspecialchars($this->session->userdata['email']);
+        $operation = htmlspecialchars($this->input->post('operation', true));
+        $id_product = htmlspecialchars($this->input->post('idProduct', true));
         $id_chart = $this->db->get_where('users', ['email' => $email])->result_array()[0]['id'];
         $kondisi = [
             'id_chart' => $id_chart,
@@ -314,6 +314,27 @@ class Sepatu_model extends CI_Model
         ];
         if ($this->db->update('detail_chart', $data, $kondisi)) {
             return $amount;
+        } else {
+            $this->db->display_error();
+        }
+    }
+
+    public function updateVariantProductInChart()
+    {
+        $size = htmlspecialchars($this->input->post('size', true));
+        $email = htmlspecialchars($this->session->userdata['email']);
+        $id_product = htmlspecialchars($this->input->post('idProduct', true));
+        $id_chart = $this->db->get_where('users', ['email' => $email])->result_array()[0]['id'];
+        $kondisi = [
+            'id_chart' => $id_chart,
+            'id_product' => $id_product
+        ];
+        $data = [
+            'variant' => $size
+        ];
+
+        if ($this->db->update('detail_chart', $data, $kondisi)) {
+            return true;
         } else {
             $this->db->display_error();
         }

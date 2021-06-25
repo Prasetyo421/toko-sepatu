@@ -11,7 +11,7 @@
                     </div>
                     <div class="info">
                         <a class="shoes-name" href="<?= base_url(); ?>home/detailSepatu/<?= $product['id_product']; ?>"><?= $product['shoes_name'] ?></a>
-                        <select name="variant" id="variant" class="variant">
+                        <select name="variant" class="variant" data-id-product="<?= $product['id_product']; ?>">
                             <?php for ($i = 0; $i < count($product['sizes']); $i++) : ?>
                                 <?php if ($product['sizes'][$i]['size']  == $product['variant']) : ?>
                                     <option selected value="<?= $product['sizes'][$i]['size'] ?>"><?= $product['sizes'][$i]['size'] ?></option>

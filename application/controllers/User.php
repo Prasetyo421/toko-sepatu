@@ -92,6 +92,12 @@ class User extends CI_Controller
         echo $data;
     }
 
+    public function updateVariantProduct()
+    {
+        $data = $this->sepatu->updateVariantProductInChart();
+        var_dump($data);
+    }
+
     public function hapusProductChart($id_chart, $id_product)
     {
         $this->sepatu->deleteDataChart($id_chart, $id_product);
