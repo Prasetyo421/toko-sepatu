@@ -55,6 +55,9 @@ class Admin extends CI_Controller
             $data['sizes'][$i] = $getSizes[$i]['size'];
         }
         $data['shoes'] = $this->sepatu->getDataShoesById($id);
+        for ($i = 0; $i < count($data['shoes']['sizes']); $i++) {
+            $data['shoes']['sizes'][$i] = $data['shoes']['sizes'][$i]['size'];
+        }
 
         $this->form_validation->set_rules('name-sepatu', 'Nama-Sepatu', 'required|trim', [
             'is_uniqed' => 'nama sepatu sudah ada di databse'

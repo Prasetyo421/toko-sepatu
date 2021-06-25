@@ -12,14 +12,10 @@
                 <div class="ukuran">
                     <label for="ukuran">Ukuran</label>
                     <?php for ($i = 0; $i < count($sizes); $i++) : ?>
-                        <?php if ($i < count($shoes['sizes'])) : ?>
-                            <?php if (in_array($shoes['sizes'][$i]['size'], $sizes)) : ?>
-                                <input type="checkbox" name="size[]" id="size<?= $i + 1 ?>" value="<?= $sizes[$i]; ?>" checked>
-                                <p><?= $sizes[$i] ?></p>
-                            <?php else : ?>
-                                <input type="checkbox" name="size[]" id="size<?= $i + 1 ?>" value="<?= $sizes[$i]; ?>">
-                                <p><?= $sizes[$i] ?></p>
-                            <?php endif; ?>
+
+                        <?php if (in_array($sizes[$i], $shoes['sizes'])) : ?>
+                            <input type="checkbox" name="size[]" id="size<?= $i + 1 ?>" value="<?= $sizes[$i]; ?>" checked>
+                            <p><?= $sizes[$i] ?></p>
                         <?php else : ?>
                             <input type="checkbox" name="size[]" id="size<?= $i + 1 ?>" value="<?= $sizes[$i]; ?>">
                             <p><?= $sizes[$i] ?></p>
