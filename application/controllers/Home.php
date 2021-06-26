@@ -11,6 +11,7 @@ class Home extends CI_Controller
 
     public function index()
     {
+        $data['title'] = 'Home';
         $data['judul'] = 'Halaman Home';
         $data['css'] = 'home-sepatu.css';
         $data['js'] = 'home sepatu.js';
@@ -40,7 +41,7 @@ class Home extends CI_Controller
         if ($id == null) {
             redirect('home');
         } else {
-            $data['judul'] = 'Halaman Detail Sepatu';
+            $data['title'] = 'Halaman Detail Sepatu';
             $data['css'] = 'detail-sepatu.css';
             $data['js'] = 'detail sepatu.js';
 

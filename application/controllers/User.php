@@ -22,6 +22,7 @@ class User extends CI_Controller
     public function chart()
     {
         $data['isLogin'] = is_logged_in();
+        $data['title'] = 'Chart';
         $data['css'] = 'chart.css';
         $data['js'] = 'chart.js';
         $userEmail = $this->session->userdata('email');
@@ -107,7 +108,10 @@ class User extends CI_Controller
 
     public function cekOngkir()
     {
-
+        $data['isLogin'] = is_logged_in();
+        $data['title'] = 'Cek Ongkir';
+        $data['css'] = 'cek-ongkir.css';
+        $data['js'] = 'cek ongkir.js';
         // mencari barang di table detail_chart
         // menggunakan id detail_chart atau id_chart && id_product yang dikirim
         // totalHarga = barang(harga*jumlah) * seluruhBarang
@@ -115,14 +119,9 @@ class User extends CI_Controller
 
         $this->form_validation->set_rules('select-item[]', 'select-item', 'required|trim');
 
-        // cek apakah input select-item valid
-        if (!$this->form_validation->run()) {
-            // ketika gagal kembalikan ke halaman chart
-
-            $this->chart();
-        } else {
-            // ketika validation select-item berhasil
-            // cek apakah alamat valid
+        // 
+        if ($this->form_validation->run()) {
+            // 
 
             $this->form_validation->set_rules('id-kota-asal', 'id-kota-asal', 'required|trim');
             $this->form_validation->set_rules('id-kota-tujuan', 'id-kota-tujuan', 'required|trim');
@@ -132,25 +131,31 @@ class User extends CI_Controller
             if (!$this->form_validation->run()) {
                 // ketika alamat tidak valid (hanya select-item yg valid)
                 // kembalikan ke halaman ongkir dengan user dapat menginputkan alamat
+                $data['citys'] = json_decode(file_get_contents(base_url() . 'asset/json/citys.json'), true);
 
                 $idDetailChart = $this->input->post('select-item');
+                $selectedDataProductInChart = [];
                 for ($i = 0; $i < count($idDetailChart); $i++) {
                     $selectedDataProductInChart[$i] = $this->sepatu->getDataChartByIdDetailChart($idDetailChart[$i]);
                 }
-                var_dump($selectedDataProductInChart);
+                $data['products'] = $selectedDataProductInChart;
+
+                $this->load->view('templates/sepatu_header', $data);
+                $this->load->view('user/cek_ongkir', $data);
+                $this->load->view('templates/sepatu_footer', $data);
             } else {
                 // alamat valid 
                 // user sudah menginputkan alamat
                 // tmapilkan ongkir
 
-                echo "ok";
                 $data['citys'] = json_decode(file_get_contents(base_url() . 'asset/json/citys.json'), true);
 
-                $amount = htmlspecialchars($this->input->post('amount'), true);
-                $variant = htmlspecialchars($this->input->post('variant'), true);
-
-                $data['amount'] = $amount;
-                $data['size'] = $variant;
+                $idDetailChart = $this->input->post('select-item');
+                $selectedDataProductInChart = [];
+                for ($i = 0; $i < count($idDetailChart); $i++) {
+                    $selectedDataProductInChart[$i] = $this->sepatu->getDataChartByIdDetailChart($idDetailChart[$i]);
+                }
+                $data['products'] = $selectedDataProductInChart;
 
                 $origin = htmlspecialchars($this->input->post('id-kota-asal'), true);
                 $destination = htmlspecialchars($this->input->post('id-kota-tujuan'), true);
@@ -176,8 +181,16 @@ class User extends CI_Controller
                 $data['costs'] = $costs;
                 $data['namaKotaAsal'] = $kotaAsal;
                 $data['namaKotaTujuan'] = $kotaTujuan;
-                var_dump($data);
+
+                $this->load->view('templates/sepatu_header', $data);
+                $this->load->view('user/cek_ongkir', $data);
+                $this->load->view('templates/sepatu_footer', $data);
             }
+        } else {
+            // 
+            // 
+
+            $this->chart();
         }
     }
 

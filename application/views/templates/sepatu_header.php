@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="<?= base_url(); ?>asset/css/<?= $css; ?>">
     <link rel="stylesheet" href="<?= base_url(); ?>asset/css/footer.css">
 
-    <title>Home</title>
+    <title><?= $title ?></title>
 </head>
 
 <body>

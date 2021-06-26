@@ -343,7 +343,16 @@ class Sepatu_model extends CI_Model
 
     public function getDataChartByIdDetailChart($id_detail_chart)
     {
-        $result = $this->db->get_where('detail_chart', ['id' => $id_detail_chart])->result_array()[0];
+        $query = "SELECT detail_chart.id, id_chart, id_product, amount, variant, price, shoes_name FROM detail_chart JOIN shoes ON (detail_chart.id_product = shoes.id) WHERE detail_chart.id = " . $id_detail_chart;
+        $result = $this->db->query($query)->result_array()[0];
+
+        $id_product = $result['id_product'];
+        $images = $this->db->get_where('images', ['id_shoes' => $id_product])->result_array();
+        $thumb = $this->db->get_where('thumb', ['id_shoes' => $id_product])->result_array();
+        $result['sizes'] = $this->db->get_where('sizes', ['id_shoes' => $id_product])->result_array();
+        $result['images'] = $images;
+        $result['thumb'] = $thumb;
+
         return $result;
     }
 }
