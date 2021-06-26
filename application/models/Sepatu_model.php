@@ -264,8 +264,9 @@ class Sepatu_model extends CI_Model
 
     public function getDataChart($id_chart)
     {
-        $query = "SELECT * FROM detail_chart JOIN shoes ON (detail_chart.id_product = shoes.id) WHERE detail_chart.id_chart = " . $id_chart;
+        $query = "SELECT detail_chart.id, id_chart, id_product, amount, variant, price, shoes_name FROM detail_chart JOIN shoes ON (detail_chart.id_product = shoes.id) WHERE detail_chart.id_chart = " . $id_chart;
         $result = $this->db->query($query)->result_array();
+
         for ($i = 0; $i < count($result); $i++) {
             $id_product = $result[$i]['id_product'];
             $images = $this->db->get_where('images', ['id_shoes' => $id_product])->result_array();
@@ -338,5 +339,11 @@ class Sepatu_model extends CI_Model
         } else {
             $this->db->display_error();
         }
+    }
+
+    public function getDataChartByIdDetailChart($id_detail_chart)
+    {
+        $result = $this->db->get_where('detail_chart', ['id' => $id_detail_chart])->result_array()[0];
+        return $result;
     }
 }

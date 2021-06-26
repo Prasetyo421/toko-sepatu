@@ -37,6 +37,7 @@ class User extends CI_Controller
         if (!$this->form_validation->run()) {
             $products_in_chart = $this->sepatu->getDataChart($id_chart);
             $data['products'] = $products_in_chart;
+            // var_dump($data['products']);
 
             $this->load->view('templates/sepatu_header', $data);
             $this->load->view('user/chart', $data);
@@ -107,77 +108,76 @@ class User extends CI_Controller
     public function cekOngkir()
     {
 
-        $id_shoes = htmlspecialchars($this->input->post('id'), true);
-        $data['shoes'] = $this->sepatu->getDataShoesById($id_shoes);
+        // mencari barang di table detail_chart
+        // menggunakan id detail_chart atau id_chart && id_product yang dikirim
+        // totalHarga = barang(harga*jumlah) * seluruhBarang
 
 
-        $this->form_validation->set_rules('amount', 'amount', 'required|trim');
-        $this->form_validation->set_rules('size', 'size', 'required|trim');
+        $this->form_validation->set_rules('select-item[]', 'select-item', 'required|trim');
 
-        $amount = htmlspecialchars($this->input->post('amount'), true);
-        $variant = htmlspecialchars($this->input->post('size'), true);
-
-
-        $this->form_validation->set_rules('id-kota-asal', 'id-kota-asal', 'required|trim');
-        $this->form_validation->set_rules('id-kota-tujuan', 'id-kota-tujuan', 'required|trim');
-        $this->form_validation->set_rules('kota-asal', 'kota-asal', 'required|trim');
-        $this->form_validation->set_rules('kota-tujuan', 'kota-tujuan', 'required|trim');
-
+        // cek apakah input select-item valid
         if (!$this->form_validation->run()) {
-            // echo 'form_validation2 gagal';
-            $userEmail = $this->session->userdata('email');
-            $userData = $this->db->get_where('users', ['email' => $userEmail])->result_array()[0];
+            // ketika gagal kembalikan ke halaman chart
 
-            $id_chart = $userData['id'];
-            $dataForChart = [
-                'id_chart' => $id_chart,
-                'id_product' => $id_shoes,
-                'amount' => $amount,
-                'variant' => $variant,
-            ];
-
-            $this->sepatu->insertDataChart($dataForChart);
-
-            $products_in_chart = $this->sepatu->getDataChart($id_chart);
-
-            $data['products'] = $products_in_chart;
-
-            $this->load->view('templates/sepatu_header', $data);
-            $this->load->view('user/chart', $data);
-            $this->load->view('templates/sepatu_footer');
+            $this->chart();
         } else {
-            echo "ok";
-            $data['citys'] = json_decode(file_get_contents(base_url() . 'asset/json/citys.json'), true);
+            // ketika validation select-item berhasil
+            // cek apakah alamat valid
 
-            $data['citys'] = json_decode(file_get_contents(base_url() . 'asset/json/citys.json'), true);
-            $data['amount'] = $amount;
-            $data['size'] = $variant;
+            $this->form_validation->set_rules('id-kota-asal', 'id-kota-asal', 'required|trim');
+            $this->form_validation->set_rules('id-kota-tujuan', 'id-kota-tujuan', 'required|trim');
+            $this->form_validation->set_rules('kota-asal', 'kota-asal', 'required|trim');
+            $this->form_validation->set_rules('kota-tujuan', 'kota-tujuan', 'required|trim');
 
-            $origin = htmlspecialchars($this->input->post('id-kota-asal'), true);
-            $destination = htmlspecialchars($this->input->post('id-kota-tujuan'), true);
-            $kotaAsal = htmlspecialchars($this->input->post('kota-asal'), true);
-            $kotaTujuan = htmlspecialchars($this->input->post('kota-tujuan'), true);
+            if (!$this->form_validation->run()) {
+                // ketika alamat tidak valid (hanya select-item yg valid)
+                // kembalikan ke halaman ongkir dengan user dapat menginputkan alamat
 
-            $weight = 1000;
-            $couries = ['jne', 'tiki', 'pos'];
-            $costs = [];
-            for ($i = 0; $i < 3; $i++) {
-                $cost_calculation_data = [
-                    'origin' => $origin,
-                    'destination' => $destination,
-                    'weight' => $weight,
-                    'courier' => $couries[$i]
-                ];
-                $result = $this->calculateCost($cost_calculation_data);
+                $idDetailChart = $this->input->post('select-item');
+                for ($i = 0; $i < count($idDetailChart); $i++) {
+                    $selectedDataProductInChart[$i] = $this->sepatu->getDataChartByIdDetailChart($idDetailChart[$i]);
+                }
+                var_dump($selectedDataProductInChart);
+            } else {
+                // alamat valid 
+                // user sudah menginputkan alamat
+                // tmapilkan ongkir
 
-                $result = $result['rajaongkir']['results'][0];
-                array_push($costs, $result);
+                echo "ok";
+                $data['citys'] = json_decode(file_get_contents(base_url() . 'asset/json/citys.json'), true);
+
+                $amount = htmlspecialchars($this->input->post('amount'), true);
+                $variant = htmlspecialchars($this->input->post('variant'), true);
+
+                $data['amount'] = $amount;
+                $data['size'] = $variant;
+
+                $origin = htmlspecialchars($this->input->post('id-kota-asal'), true);
+                $destination = htmlspecialchars($this->input->post('id-kota-tujuan'), true);
+                $kotaAsal = htmlspecialchars($this->input->post('kota-asal'), true);
+                $kotaTujuan = htmlspecialchars($this->input->post('kota-tujuan'), true);
+
+                $weight = 1000;
+                $couries = ['jne', 'tiki', 'pos'];
+                $costs = [];
+                for ($i = 0; $i < 3; $i++) {
+                    $cost_calculation_data = [
+                        'origin' => $origin,
+                        'destination' => $destination,
+                        'weight' => $weight,
+                        'courier' => $couries[$i]
+                    ];
+                    $result = $this->calculateCost($cost_calculation_data);
+
+                    $result = $result['rajaongkir']['results'][0];
+                    array_push($costs, $result);
+                }
+
+                $data['costs'] = $costs;
+                $data['namaKotaAsal'] = $kotaAsal;
+                $data['namaKotaTujuan'] = $kotaTujuan;
+                var_dump($data);
             }
-
-            $data['costs'] = $costs;
-            $data['namaKotaAsal'] = $kotaAsal;
-            $data['namaKotaTujuan'] = $kotaTujuan;
-            $this->load->view('user/chart', $data);
         }
     }
 
