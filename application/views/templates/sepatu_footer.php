@@ -12,8 +12,8 @@
 <script>
     const base_url = '<?= base_url(); ?>'
 </script>
-<script src="<?= base_url(); ?>asset/js/<?= $js; ?>"></script>
 <script src="<?= base_url(); ?>asset/js/template sepatu.js"></script>
+<script src="<?= base_url(); ?>asset/js/<?= $js; ?>"></script>
 </body>
 
 </html>

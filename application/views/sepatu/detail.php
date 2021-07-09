@@ -59,12 +59,13 @@
     </div>
 
     <div class="related-product">
-
-        <?php for ($i = 0; $i < count($related); $i++) : ?>
-            <a href="<?= base_url(); ?>home/detailSepatu/<?= $related[$i]['id'] ?>" class="related">
-                <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $related[$i]['thumb'][0]['thumb_name'] ?>" alt="<?= $related[$i]['thumb'][0]['thumb_name'] ?>">
-                <p><?= $related[$i]['shoes_name'] ?></p>
-            </a>
-        <?php endfor; ?>
+        <div class="container">
+            <?php for ($i = 0; $i < count($related); $i++) : ?>
+                <a href="<?= base_url(); ?>home/detailSepatu/<?= $related[$i]['id'] ?>" class="item-related-product">
+                    <img src="<?= base_url(); ?>asset/image/sepatu/thumb/<?= $related[$i]['thumb'][0]['thumb_name'] ?>" alt="<?= $related[$i]['thumb'][0]['thumb_name'] ?>">
+                    <p><?= $related[$i]['shoes_name'] ?></p>
+                </a>
+            <?php endfor; ?>
+        </div>
     </div>
 </div>

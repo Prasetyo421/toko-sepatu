@@ -2,7 +2,6 @@ console.log('ok');
 
 const thumb = document.getElementsByClassName('thumb');
 const image = document.getElementsByClassName('main-image')[0];
-const ajax = window.location.origin + '/toko-sepatu/asset/ajax/image.php';
 const amount = document.getElementById('amount');
 const body = document.getElementsByTagName('body')[0];
 const mainImage = document.getElementsByClassName('main-image')[0];
@@ -69,3 +68,23 @@ function thumbMouseover(){
     imageContent.style.left = left + 'px';
     loop++;
 }
+
+// center related product
+const relatedProduct = document.getElementsByClassName('related-product')[0]
+const containerRelProd = relatedProduct.firstElementChild;
+
+let widthRelProd = relatedProduct.offsetWidth;
+const widthItemRelProd = containerRelProd.firstElementChild.offsetWidth;
+const totalItemPerRow = Math.floor(widthRelProd / widthItemRelProd) - 1;
+const realWidthConRelProd = totalItemPerRow * widthItemRelProd + 14;
+const marginLeftConRelProd = ( widthRelProd - realWidthConRelProd ) / 2;
+containerRelProd.style.width = realWidthConRelProd + "px";
+containerRelProd.style.marginLeft = marginLeftConRelProd + "px";
+console.log("widthRelprod = " + widthRelProd + " : " + relatedProduct.offsetWidth + "; widthConRelProd: " + realWidthConRelProd);
+// end center related product
+
+
+const imgItemRelProd = containerRelProd.firstElementChild.firstElementChild;
+const marginLeft = (( widthItemRelProd - imgItemRelProd.width ) / 2) + "px";
+$(".item-related-product img").css("margin-left", marginLeft);
+

@@ -1,5 +1,5 @@
 * {
-	/* border: 1px solid; */
+	border: 1px solid;
 }
 
 body {
@@ -78,7 +78,7 @@ body {
 	opacity: 0.2;
 }
 
-.content .image-product .thumb-image img:hover hover {
+.content .image-product .thumb-image img:hover {
 	cursor: pointer;
 }
 
@@ -210,13 +210,24 @@ body {
 .content .related-product {
 	height: auto;
 	display: flex;
+	flex-wrap: wrap;
+	/* padding: 5px; */
 }
 
 .content .related-product a {
 	display: inline-block;
-	border: 1px solid;
 	box-sizing: border-box;
 	width: 200px;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+.content .related-product a:hover {
+	border: 1px solid black;
+}
+
+.content .related-product .container {
+	box-sizing: border-box;
 }
 
 .content .related-product .list-sepatu {

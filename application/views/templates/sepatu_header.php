@@ -9,8 +9,8 @@
 
     <link href="<?= base_url(); ?>asset/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="<?= base_url(); ?>asset/css/top-nav.css">
-    <link rel="stylesheet" href="<?= base_url(); ?>asset/css/<?= $css; ?>">
     <link rel="stylesheet" href="<?= base_url(); ?>asset/css/footer.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>asset/css/<?= $css; ?>">
 
     <title><?= $title ?></title>
 </head>
