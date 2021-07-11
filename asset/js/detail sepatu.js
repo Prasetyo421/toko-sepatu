@@ -74,7 +74,7 @@ function thumbMouseover(){
     loop++;
 }
 
-function centerRelProd(marginAwal){
+function centerRelProd(marginAwal, screen){
     console.log("margin awal : " + marginAwal);
     let widthRelProd = relatedProduct.offsetWidth;
     let widthConRelProd = widthRelProd - marginAwal; 
@@ -82,8 +82,10 @@ function centerRelProd(marginAwal){
     const totalItemPerRow = Math.floor(widthConRelProd / widthItemRelProd) ;
     // const realWidthConRelProd = totalItemPerRow * widthItemRelProd + 14;
     const marginLeftConRelProd = (widthConRelProd - (totalItemPerRow*widthItemRelProd)) / 2  + (marginAwal/2);
-    containerRelProd.style.width = (totalItemPerRow*widthItemRelProd+20) + "px";
-    containerRelProd.style.marginLeft = marginLeftConRelProd + "px";
+    if (screen == "dekstop" || screen == "tablet") {
+        containerRelProd.style.width = (totalItemPerRow*widthItemRelProd+20) + "px";
+        containerRelProd.style.marginLeft = marginLeftConRelProd + "px";
+    }
     console.log("widthRelprod = " + widthRelProd + " : " + relatedProduct.offsetWidth);
     const imgItemRelProd = containerRelProd.firstElementChild.firstElementChild;
     const marginLeft = (( widthItemRelProd - imgItemRelProd.width ) / 2) + "px";
@@ -97,13 +99,14 @@ let marginAwal;
 
 if (clientWidth < 576) {
     marginAwal = 0;
+    centerRelProd(0, "mobile")
 
 }else if (clientWidth < 768) {
     marginAwal = 50;
-    centerRelProd(marginAwal)
+    centerRelProd(marginAwal, "tablet")
 }else {
     marginAwal = 100;
-    centerRelProd(marginAwal)
+    centerRelProd(marginAwal< "dekstop")
 }
 
 // end center related product
