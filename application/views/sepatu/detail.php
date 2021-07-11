@@ -15,7 +15,6 @@
                     <?php endfor; ?>
                 </div>
             </div>
-
         </div>
 
         <div class="info-product">
@@ -55,7 +54,6 @@
             </form>
         </div>
 
-
     </div>
 
     <div class="related-product">
@@ -69,3 +67,6 @@
         </div>
     </div>
 </div>
+<script>
+    let thumbLength = <?= json_encode(count($shoes['thumb'])) ?>
+</script>

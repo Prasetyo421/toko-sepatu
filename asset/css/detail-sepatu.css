@@ -1,5 +1,5 @@
 * {
-	border: 1px solid;
+	/* border: 1px solid; */
 }
 
 body {
@@ -212,6 +212,7 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	/* padding: 5px; */
+	margin: 30px 0;
 }
 
 .content .related-product a {
@@ -228,6 +229,10 @@ body {
 
 .content .related-product .container {
 	box-sizing: border-box;
+}
+
+.content .related-product a p {
+	text-align: center;
 }
 
 .content .related-product .list-sepatu {
@@ -271,6 +276,7 @@ body {
 
 	.content .row1 {
 		flex-direction: column;
+		/* min-height: 100vh; */
 		height: auto;
 	}
 	.content .image-product {
@@ -292,5 +298,11 @@ body {
 	}
 	.content .related-product .list-sepatu .item {
 		width: 50%;
+	}
+}
+
+@media screen and (min-width: 768) {
+	.content .row1 {
+		height: fit-content;
 	}
 }

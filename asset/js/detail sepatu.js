@@ -5,9 +5,11 @@ const image = document.getElementsByClassName('main-image')[0];
 const amount = document.getElementById('amount');
 const body = document.getElementsByTagName('body')[0];
 const mainImage = document.getElementsByClassName('main-image')[0];
+const thumbImage = document.getElementsByClassName('thumb-image')[0]
 const imageContent = document.getElementsByClassName('image-content')[0];
 const size = document.getElementsByClassName('size');
 const inputSize = document.getElementById('size');
+const clientWidth = document.body.clientWidth;
 
 function setSize(ele){
     console.log(ele);
@@ -41,6 +43,9 @@ let heightMainImage = 0;
 if (body.offsetWidth < 576) {
     heightMainImage = body.offsetWidth;
     mainImage.style.height = heightMainImage + 'px';
+    let widthThumbImg = document.body.clientWidth / thumbLength; 
+    $('.thumb').css("width", widthThumbImg + "px")
+    $('.thumb').css("height", widthThumbImg + "px")
 }else {
     heightMainImage = mainImage.offsetWidth;
     mainImage.style.height = heightMainImage + 'px';
@@ -69,22 +74,39 @@ function thumbMouseover(){
     loop++;
 }
 
+function centerRelProd(marginAwal){
+    console.log("margin awal : " + marginAwal);
+    let widthRelProd = relatedProduct.offsetWidth;
+    let widthConRelProd = widthRelProd - marginAwal; 
+    const widthItemRelProd = containerRelProd.firstElementChild.offsetWidth;
+    const totalItemPerRow = Math.floor(widthConRelProd / widthItemRelProd) ;
+    // const realWidthConRelProd = totalItemPerRow * widthItemRelProd + 14;
+    const marginLeftConRelProd = (widthConRelProd - (totalItemPerRow*widthItemRelProd)) / 2  + (marginAwal/2);
+    containerRelProd.style.width = (totalItemPerRow*widthItemRelProd+20) + "px";
+    containerRelProd.style.marginLeft = marginLeftConRelProd + "px";
+    console.log("widthRelprod = " + widthRelProd + " : " + relatedProduct.offsetWidth);
+    const imgItemRelProd = containerRelProd.firstElementChild.firstElementChild;
+    const marginLeft = (( widthItemRelProd - imgItemRelProd.width ) / 2) + "px";
+    $(".item-related-product img").css("margin-left", marginLeft);
+}
+
 // center related product
 const relatedProduct = document.getElementsByClassName('related-product')[0]
 const containerRelProd = relatedProduct.firstElementChild;
+let marginAwal;
 
-let widthRelProd = relatedProduct.offsetWidth;
-const widthItemRelProd = containerRelProd.firstElementChild.offsetWidth;
-const totalItemPerRow = Math.floor(widthRelProd / widthItemRelProd) - 1;
-const realWidthConRelProd = totalItemPerRow * widthItemRelProd + 14;
-const marginLeftConRelProd = ( widthRelProd - realWidthConRelProd ) / 2;
-containerRelProd.style.width = realWidthConRelProd + "px";
-containerRelProd.style.marginLeft = marginLeftConRelProd + "px";
-console.log("widthRelprod = " + widthRelProd + " : " + relatedProduct.offsetWidth + "; widthConRelProd: " + realWidthConRelProd);
+if (clientWidth < 576) {
+    marginAwal = 0;
+
+}else if (clientWidth < 768) {
+    marginAwal = 50;
+    centerRelProd(marginAwal)
+}else {
+    marginAwal = 100;
+    centerRelProd(marginAwal)
+}
+
 // end center related product
 
 
-const imgItemRelProd = containerRelProd.firstElementChild.firstElementChild;
-const marginLeft = (( widthItemRelProd - imgItemRelProd.width ) / 2) + "px";
-$(".item-related-product img").css("margin-left", marginLeft);
 
